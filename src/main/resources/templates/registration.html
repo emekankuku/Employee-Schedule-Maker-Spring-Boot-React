@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>App Title</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <!-- <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle Navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#" th:href="@{/}">Registration and Login Module</a>
+            </div>
+        </div>
+    </nav> -->
+    <br /><br /><br />
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div th:if="${param.success}">
+                    <div class="alert alert-info"> You registered. Nice.</div>
+                </div>
+            </div>
+        </div>
+        <h1>Registration</h1>
+        <form th:action="@{/registration}" method="post" th:object="${user}">
+            <div class="form-group">
+                <label class="control-label" for="firstName">
+                    First Name
+                </label>
+                <input id="firstName" class="form-control" th:field="*{firstName}" required autofocus="autofocus">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="lastName">
+                    Last Name
+                </label>
+                <input id="lastName" class="form-control" th:field="*{lastName}" required autofocus="autofocus">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="email">
+                    Email
+                </label>
+                <input id="email" class="form-control" th:field="*{email}" required autofocus="autofocus">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="password">
+                    Password
+                </label>
+                <input id="password" class="form-control" type=password th:field="*{password}" required
+                    autofocus="autofocus">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Register</button>
+                <span>Already Registered? <a href="/" th:href="@{/login}">Login here</a></span>
+            </div>
+        </form>
+    </div>
+
+    <script src="" async defer></script>
+</body>
+
+</html>
