@@ -35,16 +35,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.registration.Repository.UserRepository;
-import com.example.registration.Service.UserDetailsImpl;
 import com.example.registration.Service.UserService;
-import com.example.registration.dto.ApiResponse;
-import com.example.registration.dto.JwtAuthenticationResponse;
 import com.example.registration.dto.JwtResponse;
 import com.example.registration.dto.LoginDto;
-import com.example.registration.dto.UserRegistrationDto;
+import com.example.registration.dto.SignupDto;
 import com.example.registration.exceptions.DuplicateUserException;
 import com.example.registration.model.Task;
 import com.example.registration.model.User;
+import com.example.registration.model.UserDetailsImpl;
 import com.example.registration.security.JwtTokenProvider;
 
 import jakarta.servlet.http.Cookie;
@@ -108,9 +106,9 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody UserRegistrationDto dto, HttpServletRequest req) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupDto dto, HttpServletRequest req) {
         if (userRepository.findByEmail(dto.getEmail()) != null)
-            throw new DuplicateUserException("User already exists");
+            throw new DuplicateUserException("Email Taken");
         User user = service.saveUser(dto);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }

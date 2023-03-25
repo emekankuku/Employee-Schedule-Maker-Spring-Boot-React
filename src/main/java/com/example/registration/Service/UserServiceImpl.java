@@ -17,10 +17,11 @@ import org.springframework.stereotype.Service;
 
 import com.example.registration.Repository.TaskRepository;
 import com.example.registration.Repository.UserRepository;
-import com.example.registration.dto.UserRegistrationDto;
+import com.example.registration.dto.SignupDto;
 import com.example.registration.model.Role;
 import com.example.registration.model.Task;
 import com.example.registration.model.User;
+import com.example.registration.model.UserDetailsImpl;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -39,9 +40,9 @@ public class UserServiceImpl implements UserService {
         this.taskRepository = taskRepository;
     }
 
-    // Saves UserRegistrationDto to the database
+    // Saves SignupDto to the database
     @Override
-    public User saveUser(UserRegistrationDto dto) { 
+    public User saveUser(SignupDto dto) { 
         User user = new User(dto.getFirstName(), dto.getLastName(), dto.getEmail(),
                 passwordEncoder.encode(dto.getPassword()), Arrays.asList(new Role("ROLE_USER")));
         return userRepository.save(user);

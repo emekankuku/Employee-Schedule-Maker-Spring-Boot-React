@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.registration.Repository.UserRepository;
 import com.example.registration.Service.UserService;
-import com.example.registration.dto.UserRegistrationDto;
+import com.example.registration.dto.SignupDto;
 
 @SpringBootTest
 class RegistrationApplicationTests {
@@ -21,7 +21,7 @@ class RegistrationApplicationTests {
 
 	@Test
 	void userSaved(){
-		UserRegistrationDto dto = new UserRegistrationDto("First2", "last2", "email2", "password2");
+		SignupDto dto = new SignupDto("First2", "last2", "email2", "password2");
 		service.saveUser(dto);
 		
 		

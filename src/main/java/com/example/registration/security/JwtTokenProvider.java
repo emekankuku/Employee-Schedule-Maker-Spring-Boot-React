@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import com.example.registration.Service.UserDetailsImpl;
 import com.example.registration.model.User;
+import com.example.registration.model.UserDetailsImpl;
 
 import java.util.Date;
 

@@ -2,10 +2,10 @@ POST http://localhost:8080/registration/signup
 Content-Type: application/json
 
 {
-     "firstName": "Emeka",
-     "lastName": "Nkuku",
+     "firstName": "emeka",
+     "lastName": "nkuku",
      "email": "emekankuku@gmail.com",
-     "password": "Asdfghjkl1;"
+     "password": "lanique999"
  }
 
 ###
@@ -17,7 +17,7 @@ Content-Type: application/json
 
 {
      "email": "emekankuku@gmail.com",
-     "password": "Asdfghjkl1;"
+     "password": "Asdfghjkl2;"
  }
 
 ###

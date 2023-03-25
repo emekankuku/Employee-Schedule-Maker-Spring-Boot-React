@@ -11,7 +11,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import UserComponent from './UserComponent';
-import Registration from './Components/Registration';
+import Signup from './Components/Signup';
 import Signin from './Components/Signin';
 import Home from './Components/Home';
 

@@ -6,7 +6,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import Registration from './Components/Registration';
+import Signup from './Components/Signup';
 import Signin from './Components/Signin';
 import Home from './Components/Home';
 import Navbar from './Components/Navbar';
@@ -19,7 +19,7 @@ function App() {
         <Navbar/>
         <Routes>
           <Route path="/login" element={< Signin />} />
-          <Route path="/register" element={< Registration />} />
+          <Route path="/signup" element={< Signup />} />
           <Route path="/home" element={< Home />} />
           <Route path="/addTask" element={< AddTask />} />
           <Route path="*" element={<Signin />} />

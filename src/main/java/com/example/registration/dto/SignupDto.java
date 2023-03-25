@@ -4,27 +4,30 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public class UserRegistrationDto {
+public class SignupDto {
 
-    @NotNull(message = "Must include first name")
+    @NotNull(message = "First Name is required")
+    @Size(min = 1, message = "First Name is required")
     private String firstName;
 
-    @NotNull(message = "Must include last name")
+    @NotNull(message = "Last Name is required")
+    @Size(min = 1, message = "Last Name is required")
     private String lastName;
 
     @NotNull(message = "Email is required")
-    @Email(message = "Email is not well-formatted")
+    @Size(min = 1, message = "Email is required")
+    @Email(message = "Email must be well-formatted")
     private String email;
 
     @NotNull(message = "Password is required")
     @Size(min = 6, message = "Password must be at least 6 characters")
     private String password;
 
-    public UserRegistrationDto(){
+    public SignupDto(){
         
     }
 
-    public UserRegistrationDto(String firstName, String lastName, String email, String password) {
+    public SignupDto(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

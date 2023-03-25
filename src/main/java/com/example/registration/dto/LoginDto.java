@@ -7,11 +7,12 @@ import jakarta.validation.constraints.Size;
 
 public class LoginDto {
     @NotNull(message = "Email is required")
-    @Size(min=1, message = "Email is required")
+    @Size(min = 1, message = "Email is required")
     @Email(message = "Email is not well-formatted")
     private String email;
 
     @NotNull(message = "Password is required")
+    @Size(min = 6, message = "Password must be at least 6 characters")
     private String password;
 
     public LoginDto() {

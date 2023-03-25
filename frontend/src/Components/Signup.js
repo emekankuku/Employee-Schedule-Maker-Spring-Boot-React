@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-export default function Login({ props }) {
+export default function Signup({ props }) {
 
     const [user, setUser] = useState({
+        firstName: '',
+        lastName: '',
         email: '',
         password: ''
     });
@@ -16,33 +18,37 @@ export default function Login({ props }) {
     const handleSubmit = e => {
         e.preventDefault();
 
-        axios.post('http://localhost:8080/registration/signin', user,
+        axios.post('http://localhost:8080/registration/signup', user,
             {
                 withCredentials: 'include', //Enables sending cookies from api to browser
                 headers: {
                     'Content-Type': 'application/json',
+                    Accept: "application/json"
                 }
-            })
-            .then(res => {
-                console.log(res);
-                navigate('/home')
+            }
+        )
+            .then((response) => {
+                alert("Registration Successful");
+                navigate("/login");
             })
             .catch((error) => {
                 if (error.response.data.fieldErrors) {
                     var fieldErrors = error.response.data.fieldErrors;
                     var newErrors = {
+                        firstName: '',
+                        lastName: '',
                         email: '',
-                        password: '',
-                        unauthorized: ''
+                        password: ''
                     };
                     fieldErrors.forEach(fieldError => {
                         newErrors[fieldError.field] = fieldError.message;
                     })
                     setErrors(newErrors);
-                    console.log(newErrors);
+                    console.log(errors);
                 }
             });
     }
+
 
     const handleChange = e => {
         const target = e.target;
@@ -52,7 +58,7 @@ export default function Login({ props }) {
             ...user,
             [name]: value
         });
-    }
+    };
 
     const errorList = Object.entries(errors).map(([error, message]) => {
         if (message)
@@ -66,11 +72,24 @@ export default function Login({ props }) {
 
     return (
         <div className="container">
-            <h1>Sign In</h1>
+            <h1>Sign Up</h1>
 
             <div>{errorList}</div>
 
             <form onSubmit={handleSubmit}>
+                <div class="form-group">
+                    <label>
+                        First Name:
+                        <input type="text" name="firstName" id="firstName" value={user.firstName} onChange={handleChange} />
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Last Name:
+                        <input type="text" name="lastName" id="lastName" value={user.lastName} onChange={handleChange} />
+                    </label>
+                </div>
 
                 <div class="form-group">
                     <label>
@@ -87,12 +106,11 @@ export default function Login({ props }) {
                 </div>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success">Login</button><br></br>
-                    <Link to="/signup">Register here.</Link>
+                    <button type="submit" class="btn btn-success">Register</button><br></br>
+                    <Link to="/login">Login here.</Link>
                 </div>
 
             </form>
         </div>
     );
 }
-
