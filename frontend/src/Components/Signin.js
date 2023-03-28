@@ -24,7 +24,9 @@ export default function Login({ props }) {
                 }
             })
             .then(res => {
+                // localStorage.setItem("jwt", res.data.token);
                 console.log(res);
+                // console.log(localStorage.getItem("jwt"));
                 navigate('/home')
             })
             .catch((error) => {
@@ -58,40 +60,41 @@ export default function Login({ props }) {
         if (message)
             return (
                 <div>
-                    <label style={{ color: 'red' }}>{message}</label>
+                    <label className="errors">{message}</label>
                     <br></br>
                 </div>
             )
     })
 
     return (
-        <div className="container">
-            <h1>Sign In</h1>
+        <div className="container margin-bottom">
+            <div class="text-center">
+                <h1 class="form-title">Sign In</h1>
 
-            <div>{errorList}</div>
+                <div>{errorList}</div>
 
-            <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit}>
+                <div class="form-group row margin-bottom">
+                        <label class="col-sm-3 col-form-label"> Email:</label>
+                        <div class="col-sm-7">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" value={user.email} onChange={handleChange} />
+                        </div>
+                    </div>
 
-                <div class="form-group">
-                    <label>
-                        Email:
-                        <input type="text" name="email" id="email" value={user.email} onChange={handleChange} />
-                    </label>
-                </div>
+                    <div class="form-group row margin-bottom">
+                        <label class="col-sm-3 col-form-label">Password:</label>
+                        <div class="col-sm-7">
+                            <input type="password" className="form-control" name="password" id="password" value={user.password} onChange={handleChange} />
+                        </div>
+                    </div>
 
-                <div class="form-group">
-                    <label>
-                        Password:
-                        <input type="password" name="password" id="password" value={user.password} onChange={handleChange} />
-                    </label>
-                </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">Login</button><br></br>
+                        <Link to="/signup">Don't have an account? Register here.</Link>
+                    </div>
 
-                <div class="form-group">
-                    <button type="submit" class="btn btn-success">Login</button><br></br>
-                    <Link to="/signup">Register here.</Link>
-                </div>
-
-            </form>
+                </form>
+            </div>
         </div>
     );
 }

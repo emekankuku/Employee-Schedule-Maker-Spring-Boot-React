@@ -74,7 +74,8 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDto dto, HttpServletResponse res, HttpServletRequest req) {
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDto dto, HttpServletResponse res,
+            HttpServletRequest req) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -86,11 +87,6 @@ public class AuthController {
         cookie.setSecure(true);
         cookie.setHttpOnly(true);
         res.addCookie(cookie);
-
-        System.out.println("These are the cookies:");
-        System.out.println(req.getCookies());
-        System.out.println("This is the username:");
-        System.out.println(tokenProvider.getUserNameFromJWT(jwt));
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream()
@@ -114,8 +110,9 @@ public class AuthController {
     }
 
     @GetMapping("/logout")
-    public void logout(HttpServletRequest req, HttpServletResponse res){
-        if(res == null) return;
+    public void logout(HttpServletRequest req, HttpServletResponse res) {
+        if (res == null)
+            return;
         SecurityContext context = SecurityContextHolder.getContext();
         SecurityContextHolder.clearContext();
         context.setAuthentication(null);
@@ -130,9 +127,9 @@ public class AuthController {
         Cookie[] cookies = req.getCookies();
         String jwt = "";
         String userEmail = "";
-        if(cookies != null){
-            for(Cookie cookie: cookies){
-                if(cookie.getName().equals(cookieName)){
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(cookieName)) {
                     jwt = cookie.getValue();
                     userEmail = new JwtTokenProvider().getUserNameFromJWT(jwt);
                     return userRepository.findByEmail(userEmail);

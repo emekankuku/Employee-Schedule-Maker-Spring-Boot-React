@@ -10,9 +10,9 @@ import com.example.registration.model.User;
 
 public interface UserService extends UserDetailsService{
     User saveUser(SignupDto Dto);
+    void deleteUser(String email);
+
     Task saveTask(Task task);
-    User getCurrentUser(String email);
     List<Task> getCurrentTasks();
     void deleteTask(Long id);
-    User findByEmail(String email);
 }

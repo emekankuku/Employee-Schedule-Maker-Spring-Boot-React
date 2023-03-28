@@ -114,6 +114,11 @@
 			</scope>
 		</dependency>
 		<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-test</artifactId>
+    <scope>test</scope>
+</dependency>
+		<dependency>
 			<groupId>
 				org.springframework.security
 			</groupId>
@@ -124,6 +129,15 @@
 				test
 			</scope>
 		</dependency>
+		<dependency>
+    <groupId>org.mockito</groupId>
+    <artifactId>mockito-core</artifactId>
+</dependency>
+<dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <scope>test</scope>
+</dependency>
 		<dependency>
 			<groupId>
 				org.springframework.boot

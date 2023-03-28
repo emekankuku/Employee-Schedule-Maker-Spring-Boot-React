@@ -8,7 +8,10 @@ import axios from 'axios';
 export default function Home() {
 
     const [currUser, setCurrUser] = useState("");
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
+    const [unauthorized, setUnauthorized] = useState(false);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         setLoading(true);
@@ -17,9 +20,19 @@ export default function Home() {
             .then(currUser => {
                 setCurrUser(currUser);
                 setLoading(false);
-                console.log(currUser);
+            }).catch(error => {
+                console.log(error);
+                if (error)
+                    setUnauthorized(true);
             })
     }, []);
+
+    if (unauthorized)
+        return <div className="container">
+            <div className='text-center'>
+                <h1>Unauthorized</h1>
+            </div>
+        </div>
 
     if (loading) {
         return <p>Loading...</p>;
@@ -27,8 +40,10 @@ export default function Home() {
 
 
     return (
-        <section>
-            <div>Hello {currUser.firstName}</div>
-            </section>
+        <div className="container">
+            <div className='text-center'>
+                <h1>You have officially signed in, {currUser.firstName}.</h1>
+            </div>
+        </div>
     );
 }

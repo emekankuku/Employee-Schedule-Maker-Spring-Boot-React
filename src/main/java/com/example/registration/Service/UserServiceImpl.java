@@ -42,25 +42,24 @@ public class UserServiceImpl implements UserService {
 
     // Saves SignupDto to the database
     @Override
-    public User saveUser(SignupDto dto) { 
+    public User saveUser(SignupDto dto) {
         User user = new User(dto.getFirstName(), dto.getLastName(), dto.getEmail(),
                 passwordEncoder.encode(dto.getPassword()), Arrays.asList(new Role("ROLE_USER")));
         return userRepository.save(user);
+    }
+
+    // Deletes user by email
+    public void deleteUser(String email){
+        User user = userRepository.findByEmail(email);
+        if (user == null) 
+            throw new IllegalStateException("Email does not exist");
+        userRepository.deleteById(user.getId());
     }
 
     // Saves task to repository
     @Override
     public Task saveTask(Task task) {
         return taskRepository.save(task);
-    }
-
-    // Gets currently logged-in user
-    public User getCurrentUser(String email) {
-        return userRepository.findByEmail(email);
-    }
-
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
     }
 
     // Gets current user's tasks
@@ -75,11 +74,11 @@ public class UserServiceImpl implements UserService {
         return tasks;
     }
 
+    // Delete task by id
     public void deleteTask(Long taskID) {
         boolean exists = taskRepository.existsById(taskID);
-        if (!exists) {
+        if (!exists) 
             throw new IllegalStateException("Task with id " + taskID + " does not exist");
-        }
         taskRepository.deleteById(taskID);
     }
 
@@ -89,12 +88,6 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(email);
         if (user == null)
             throw new UsernameNotFoundException("Invalid username or password.");
-        //return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
         return UserDetailsImpl.build(user);
-    }
-
-    // Maps roles to authorities
-    private List<? extends GrantedAuthority> mapRolesToAuthorities(List<Role> roles) {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 }

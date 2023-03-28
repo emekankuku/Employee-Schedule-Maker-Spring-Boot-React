@@ -64,53 +64,52 @@ export default function Signup({ props }) {
         if (message)
             return (
                 <div>
-                    <label style={{ color: 'red' }}>{message}</label>
+                    <label class="errors">{message}</label>
                     <br></br>
                 </div>
             )
     })
 
     return (
-        <div className="container">
-            <h1>Sign Up</h1>
+        <div className="container margin-bottom">
+            <div class="text-center">
+                <h1 class="form-title">Sign Up</h1>
 
-            <div>{errorList}</div>
+                <div>{errorList}</div>
 
-            <form onSubmit={handleSubmit}>
-                <div class="form-group">
-                    <label>
-                        First Name:
-                        <input type="text" name="firstName" id="firstName" value={user.firstName} onChange={handleChange} />
-                    </label>
-                </div>
+                <form onSubmit={handleSubmit}>
+                    <div class="form-group row margin-bottom">
+                        <label class="col-sm-3 col-form-label"> First Name:</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" name="firstName" id="firstName" placeholder="Enter first name" value={user.firstName} onChange={handleChange} />
+                        </div>
+                    </div>
+                    <div class="form-group row margin-bottom">
+                        <label class="col-sm-3 col-form-label"> Last Name:</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Enter last name" value={user.lastName} onChange={handleChange} />
+                        </div>
+                    </div>
+                    <div class="form-group row margin-bottom">
+                        <label class="col-sm-3 col-form-label"> Email:</label>
+                        <div class="col-sm-7">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" value={user.email} onChange={handleChange} />
+                        </div>
+                    </div>
+                    <div class="form-group row margin-bottom">
+                        <label class="col-sm-3 col-form-label"> Password:</label>
+                        <div class="col-sm-7">
+                            <input type="password" class="form-control" name="password" id="firstName" placeholder="Enter password" value={user.password} onChange={handleChange} />
+                        </div>
+                    </div>
 
-                <div class="form-group">
-                    <label>
-                        Last Name:
-                        <input type="text" name="lastName" id="lastName" value={user.lastName} onChange={handleChange} />
-                    </label>
-                </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">Register</button><br></br>
+                        <Link to="/login">Already have an account? Login here.</Link>
+                    </div>
 
-                <div class="form-group">
-                    <label>
-                        Email:
-                        <input type="text" name="email" id="email" value={user.email} onChange={handleChange} />
-                    </label>
-                </div>
-
-                <div class="form-group">
-                    <label>
-                        Password:
-                        <input type="password" name="password" id="password" value={user.password} onChange={handleChange} />
-                    </label>
-                </div>
-
-                <div class="form-group">
-                    <button type="submit" class="btn btn-success">Register</button><br></br>
-                    <Link to="/login">Login here.</Link>
-                </div>
-
-            </form>
+                </form>
+            </div>
         </div>
     );
 }
