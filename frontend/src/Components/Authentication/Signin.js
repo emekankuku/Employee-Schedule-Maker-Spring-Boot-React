@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
+import UserService from '../../Service/UserService';
 import axios from 'axios';
 
 export default function Login({ props }) {
@@ -13,21 +14,16 @@ export default function Login({ props }) {
 
     const navigate = useNavigate();
 
+    // useEffect(() => {
+    //     localStorage.removeItem("jwt");
+    // }, []);
+
     const handleSubmit = e => {
         e.preventDefault();
-
-        axios.post('http://localhost:8080/registration/signin', user,
-            {
-                withCredentials: 'include', //Enables sending cookies from api to browser
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
+        UserService.signin(user)
             .then(res => {
-                // localStorage.setItem("jwt", res.data.token);
-                console.log(res);
-                // console.log(localStorage.getItem("jwt"));
-                navigate('/home')
+                localStorage.setItem("jwt", res.data.token);
+                navigate('/');
             })
             .catch((error) => {
                 if (error.response.data.fieldErrors) {
@@ -74,7 +70,7 @@ export default function Login({ props }) {
                 <div>{errorList}</div>
 
                 <form onSubmit={handleSubmit}>
-                <div class="form-group row margin-bottom">
+                    <div class="form-group row margin-bottom">
                         <label class="col-sm-3 col-form-label"> Email:</label>
                         <div class="col-sm-7">
                             <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" value={user.email} onChange={handleChange} />

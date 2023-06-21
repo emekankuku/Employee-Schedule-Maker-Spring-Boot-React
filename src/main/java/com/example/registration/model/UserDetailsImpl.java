@@ -1,7 +1,7 @@
 package com.example.registration.model;
 
-
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -19,43 +19,39 @@ public class UserDetailsImpl implements UserDetails {
 
 	private String firstName;
 
-    private String lastName;
+	private String lastName;
 
 	private String email;
 
 	@JsonIgnore
 	private String password;
 
+	private String role;
+
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public UserDetailsImpl(Long id, String firstName, String lastName, String email, String password,
-			Collection<? extends GrantedAuthority> authorities) {
+	public UserDetailsImpl(Long id, String firstName, String lastName, String email, String password, String role) {
 		this.id = id;
 		this.firstName = firstName;
-        this.lastName = lastName;
+		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
-		this.authorities = authorities;
+		this.role = role;
 	}
 
 	public static UserDetailsImpl build(User user) {
-		// Maps roles to authorities
-		List<GrantedAuthority> authorities = user.getRoles().stream()
-				.map(role -> new SimpleGrantedAuthority(role.getName()))
-				.collect(Collectors.toList());
-
 		return new UserDetailsImpl(
-				user.getId(), 
+				user.getId(),
 				user.getFirstName(),
-                user.getLastName(), 
+				user.getLastName(),
 				user.getEmail(),
-				user.getPassword(), 
-				authorities);
+				user.getPassword(),
+				user.getRole());
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return authorities;
+		return new HashSet<GrantedAuthority>();
 	}
 
 	public Long getId() {
@@ -71,16 +67,17 @@ public class UserDetailsImpl implements UserDetails {
 		return password;
 	}
 
-	
 	public String getFirstName() {
 		return firstName;
 	}
 
-    public String getLastName(){
-        return lastName;
-    }
+	public String getLastName() {
+		return lastName;
+	}
 
-
+	public String getRole() {
+		return role;
+	}
 
 	@Override
 	public boolean isAccountNonExpired() {
@@ -112,11 +109,9 @@ public class UserDetailsImpl implements UserDetails {
 		return Objects.equals(id, user.id);
 	}
 
-    @Override
-    public String getUsername() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
-
-

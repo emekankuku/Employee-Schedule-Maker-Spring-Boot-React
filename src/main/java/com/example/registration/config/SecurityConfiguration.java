@@ -55,18 +55,6 @@ public class SecurityConfiguration {
         return new AuthTokenFilter();
     }
 
-    // @Bean
-    // public AuthenticationManager authenticationManager(HttpSecurity http,
-    // BCryptPasswordEncoder bCryptPasswordEncoder,
-    // UserDetailsService userDetailsService)
-    // throws Exception {
-    // return http.getSharedObject(AuthenticationManagerBuilder.class)
-    // .userDetailsService(userDetailsService)
-    // .passwordEncoder(bCryptPasswordEncoder)
-    // .and()
-    // .build();
-    // }
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
@@ -85,14 +73,6 @@ public class SecurityConfiguration {
         return auth;
     }
 
-//    @Bean
-//   public SecurityContextRepository securityContextRepository() {
-//     return new DelegatingSecurityContextRepository(
-//         new RequestAttributeSecurityContextRepository(),
-//         new HttpSessionSecurityContextRepository()
-//     );
-//   }
-
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
     }
@@ -104,9 +84,6 @@ public class SecurityConfiguration {
         http
                 .cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
-                // .and()
-                // .sessionManagement().
-                // sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 .and()
                 .authorizeHttpRequests().requestMatchers(HttpMethod.GET).permitAll()
                 .requestMatchers("/**").permitAll()
@@ -123,6 +100,7 @@ public class SecurityConfiguration {
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
+        source.registerCorsConfiguration("/**", config.applyPermitDefaultValues());
         config.setAllowCredentials(true); // you USUALLY want this
         config.addAllowedOriginPattern("*");
         config.addAllowedHeader("*");
@@ -133,6 +111,7 @@ public class SecurityConfiguration {
         config.addAllowedMethod("POST");
         config.addAllowedMethod("DELETE");
         config.addAllowedMethod("PATCH");
+        config.setExposedHeaders(Arrays.asList("Authorization"));
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }

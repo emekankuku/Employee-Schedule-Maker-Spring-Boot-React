@@ -1,8 +1,7 @@
-package com.example.registration.dto;
+package com.example.registration.dto.AuthenticationDtos;
 
 import java.util.List;
 
-import com.example.registration.model.Role;
 
 public class JwtResponse {
 
@@ -11,23 +10,23 @@ public class JwtResponse {
     public String firstName;
     public String lastName;
     public String email;
-    public List<String> roles;
+    public String role;
 
-    public JwtResponse(String accessToken, Long id, String firstName, String lastName, String email, List<String> roles) {
+    public JwtResponse(String accessToken, Long id, String firstName, String lastName, String email, String role) {
         this.token = accessToken;
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.roles = roles;
+        this.role = role;
     }
 
-    public JwtResponse(Long id, String firstName, String lastName, String email, List<String> roles) {
+    public JwtResponse(Long id, String firstName, String lastName, String email, String role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.roles = roles;
+        this.role = role;
     }
 
     public JwtResponse(Long id, String firstName, String lastName, String email) {

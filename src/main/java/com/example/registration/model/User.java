@@ -2,28 +2,36 @@ package com.example.registration.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.annotations.ManyToAny;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "users")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "userRole")
 public class User {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,25 +42,24 @@ public class User {
     @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-        name = "users_roles", 
-        joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private List<Role> roles = new ArrayList<>();
+    private String role;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Task> tasks = new ArrayList<>();
+    //Maps the user entity to List<User> users in group entity
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "users")
+    private Set<Group> groups = new HashSet<>();
 
-    //Provides default constructor for User entity
-    public User(){
+    // @OneToOne(cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
+    // @JoinColumn(name = "schedule_id", referencedColumnName = "id")
+    // private Schedule schedule;
 
+    // Provides default constructor for User entity
+    public User() {
     }
 
     public User(String firstName, String lastName, String email, String password) {
@@ -62,12 +69,12 @@ public class User {
         this.password = password;
     }
 
-    public User(String firstName, String lastName, String email, String password, List<Role> roles) {
+    public User(String firstName, String lastName, String email, String password, String role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.roles = roles;
+        this.role = role;
     }
 
     public Long getId() {
@@ -90,9 +97,9 @@ public class User {
         return password;
     }
 
-    public List<Role> getRoles() {
-        return roles;
-    }
+    // public List<Role> getRoles() {
+    // return roles;
+    // }
 
     public void setId(Long id) {
         this.id = id;
@@ -114,8 +121,34 @@ public class User {
         this.password = password;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public String getRole() {
+        return role;
     }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public Set<Group> getGroups() {
+        return groups;
+    }
+
+    public void addGroup(Group group) {
+        groups.add(group);
+    }
+
+    public void removeGroup(Group group){
+        groups.remove(group);
+    }
+
+    // public Schedule getSchedule() {
+    //     return schedule;
+    // }
+
+    // public void setSchedule(Schedule schedule) {
+    //     this.schedule = schedule;
+    // }
+
+    
 
 }

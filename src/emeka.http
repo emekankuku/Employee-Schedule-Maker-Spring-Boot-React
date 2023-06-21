@@ -1,0 +1,109 @@
+POST http://localhost:8080/registration/signup
+Content-Type: application/json
+
+{
+     "firstName": "emeka",
+     "lastName": "nkuku",
+     "email": "emekankuku@gmail.com",
+     "password": "Asdfghjkl1;",
+     "role": "Employee"
+ }
+
+
+###
+
+POST http://localhost:8080/registration/signin
+Content-Type: application/json
+# Accept: application/json
+# Access-Control-Allow-Credentials: true
+
+{
+     "email": "emekankuku@gmail.com",
+     "password": "Asdfghjkl1;"
+ }
+
+###
+
+POST http://localhost:8080/schedule/createSchedule
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+
+{
+    "email": "emekankuku@gmail.com",
+    "group": "groupa",
+    "schedule": {
+     "sunday": "9-5",
+     "monday": "9-5",
+     "tuesday": "9-5",
+     "wednesday": "9-5",
+     "thursday": "9-5",
+     "friday": "9-5",
+     "saturday": "9-5"
+ }
+}
+
+###
+
+POST http://localhost:8080/schedule/testing
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+
+{
+    "str1": "test one",
+    "str2": {
+     "sunday": "9-5",
+     "monday": "9-5",
+     "tuesday": "9-5",
+     "wednesday": "9-5",
+     "thursday": "9-5",
+     "friday": "9-5",
+     "saturday": "9-5"
+ }
+}
+
+###
+
+POST http://localhost:8080/grouping/getGroups
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+
+{
+     "firstName": "emeka",
+     "lastName": "nkuku",
+     "email": "emekankuku@gmail.com",
+     "role": "Employee"
+ }
+
+### 
+POST http://localhost:8080/grouping/deleteGroup
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+{
+     "name": "groupa"
+ }
+
+###
+
+POST http://localhost:8080/grouping/getUsers
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+
+{
+     "name": "groupies"
+ }
+
+###
+
+
+
+GET http://localhost:8080/registration/logout

@@ -9,3 +9,12 @@
 .errors{
     color: red
 }
+
+.btn-primary-outline {
+    background-color: transparent;
+    border-color: #ccc;
+  }
+
+  .pagination li a {
+    font-size: 100%;
+}

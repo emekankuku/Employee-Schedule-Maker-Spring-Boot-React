@@ -12,47 +12,78 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.registration.Repository.UserRepository;
 import com.example.registration.Service.UserService;
-import com.example.registration.dto.SignupDto;
+import com.example.registration.dto.AuthenticationDtos.SignupDto;
 import com.example.registration.model.User;
 
 @SpringBootTest
 class UserServiceTests {
 
 	@Autowired
-	private UserRepository repo;
+    private UserRepository<User> userRepository;
 
 	@Autowired
 	private UserService service;
 
-	SignupDto dto = new SignupDto("FirstName", "LastName", "emaill@gmail.com", "password");
+	//Mock Employee
+	SignupDto dto1 = new SignupDto("FirstName1", "LastName1", "email1@gmail.com", "password1", "Employee");
+	//Mock Manager
+	SignupDto dto2 = new SignupDto("FirstName2", "LastName2", "email2@gmail.com", "password2", "Manager");
 
 	@BeforeEach
-	public void saveMockUser(){
-		service.saveUser(dto);
+	public void saveMockUser(){ //Save mock user for further testing 
+		service.saveUser(dto1);
+		service.saveUser(dto2);
 	}
 
 	@Test
-	public void checkUserSaved(){
-		String email = dto.getEmail();
+	public void checkUserSaved(){ //Check if user is saved by asserting that the email exists in the database
+		String email1 = dto1.getEmail();
+		String email2 = dto2.getEmail();
 		String notRealEmail = "randomemail@gmail.com";
-		assertNotNull(repo.findByEmail(email));
-		assertNull(repo.findByEmail(notRealEmail));
+		assertNotNull(userRepository.findByEmail(email1));
+		assertNotNull(userRepository.findByEmail(email2));
+		assertNull(userRepository.findByEmail(notRealEmail));
 	}
 
 	@Test
-	public void checkUserAttributes(){
-		String email = dto.getEmail();
-		User user = repo.findByEmail(email);
-		String firstName = user.getFirstName();
-		String lastName = user.getLastName();
+	public void checkUserAttributes(){ //Check if user contains its correct attributes when added to the database
+		String email1 = dto1.getEmail();
+		User user1 = userRepository.findByEmail(email1);
+		String firstName1 = user1.getFirstName();
+		String lastName1 = user1.getLastName();
+		String role1 = user1.getRole();
 
-		assertEquals(firstName, dto.getFirstName());
-		assertEquals(lastName, dto.getLastName());
+		String email2 = dto2.getEmail();
+		User user2 = userRepository.findByEmail(email2);
+		String firstName2 = user2.getFirstName();
+		String lastName2 = user2.getLastName();
+		String role2 = user2.getRole();
+
+
+		assertEquals(firstName1, dto1.getFirstName());
+		assertEquals(lastName1, dto1.getLastName());
+		assertEquals(role1, dto1.getRole());
+
+		assertEquals(firstName2, dto2.getFirstName());
+		assertEquals(lastName2, dto2.getLastName());
+		assertEquals(role2, dto2.getRole());
 	} 
 
+	// @Test
+	// public void ensureRoles(){
+	// 	String email1 = dto1.getEmail();
+	// 	Manager user1 = repo.findByEmail(email1);
+	// 	String role1 = user1.getRole();
+
+	// 	String email2 = dto2.getEmail();
+	// 	User user2 = repo.findByEmail(email2);
+		
+	// }
+
 	@AfterEach
-		public void deleteMockUser(){
-			service.deleteUser(dto.getEmail());
+		public void deleteMockUser(){ //Delete user to end testing 
+			service.deleteUser(dto1.getEmail());
+			service.deleteUser(dto2.getEmail());
 	}
 
 }

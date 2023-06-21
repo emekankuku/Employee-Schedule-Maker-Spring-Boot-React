@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
+import UserService from '../../Service/UserService';
+import Form from 'react-bootstrap/Form'
 import axios from 'axios';
 
 export default function Signup({ props }) {
@@ -8,25 +10,19 @@ export default function Signup({ props }) {
         firstName: '',
         lastName: '',
         email: '',
-        password: ''
+        password: '',
+        role: ''
     });
 
-    const [errors, setErrors] = useState({})
+    const [errors, setErrors] = useState({});
+
+    const roles = ["Employee", "Manager"];
 
     const navigate = useNavigate();
 
     const handleSubmit = e => {
         e.preventDefault();
-
-        axios.post('http://localhost:8080/registration/signup', user,
-            {
-                withCredentials: 'include', //Enables sending cookies from api to browser
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: "application/json"
-                }
-            }
-        )
+        UserService.signup(user)
             .then((response) => {
                 alert("Registration Successful");
                 navigate("/login");
@@ -38,7 +34,8 @@ export default function Signup({ props }) {
                         firstName: '',
                         lastName: '',
                         email: '',
-                        password: ''
+                        password: '',
+                        role: ''
                     };
                     fieldErrors.forEach(fieldError => {
                         newErrors[fieldError.field] = fieldError.message;
@@ -54,11 +51,26 @@ export default function Signup({ props }) {
         const target = e.target;
         const value = target.value;
         const name = target.name;
+        if(roles.includes(value)){
+            setUser({
+                ...user,
+                ["role"]: value
+            });
+        }else{
         setUser({
             ...user,
             [name]: value
         });
+    }
     };
+
+    const yourChangeHandler = e => {
+        alert(e.target.id + ": " + e.target.value)
+        setUser({
+            ...user,
+            ["role"]: e.target.value
+        });
+    }
 
     const errorList = Object.entries(errors).map(([error, message]) => {
         if (message)
@@ -102,6 +114,16 @@ export default function Signup({ props }) {
                             <input type="password" class="form-control" name="password" id="firstName" placeholder="Enter password" value={user.password} onChange={handleChange} />
                         </div>
                     </div>
+                    <div class="form-group row margin-bottom">
+                        <label class="col-sm-3 col-form-label"> Please choose role:</label>
+                        <div class="col-sm-7">
+                        <select onChange={handleChange}>
+                        <option selected>Please choose a role:</option>
+                        <option id="role" value="Employee">Employee</option>
+                        <option id="role" value="Manager">Manager</option>
+                    </select>
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <button type="submit" class="btn btn-success">Register</button><br></br>
@@ -110,6 +132,7 @@ export default function Signup({ props }) {
 
                 </form>
             </div>
+            <label>Your role is {user.role}</label>
         </div>
     );
 }

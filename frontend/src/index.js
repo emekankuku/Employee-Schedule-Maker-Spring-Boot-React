@@ -5,16 +5,6 @@ import './custom.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
-import UserComponent from './UserComponent';
-import Signup from './Components/Signup';
-import Signin from './Components/Signin';
-import Home from './Components/Home';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

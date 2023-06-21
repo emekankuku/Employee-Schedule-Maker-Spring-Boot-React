@@ -1,38 +1,24 @@
 import { Button } from 'bootstrap';
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './Navbar';
+import UserService from '../Service/UserService';
 import axios from 'axios';
+import jwt_decode from "jwt-decode";
 
-export default function Home() {
+export const Home = ({ user }) => {
 
-    const [currUser, setCurrUser] = useState("");
+    const [currUser, setCurrUser] = useState(user);
     const [loading, setLoading] = useState(false);
-    const [unauthorized, setUnauthorized] = useState(false);
 
     const navigate = useNavigate();
 
     useEffect(() => {
         setLoading(true);
-        fetch("registration/currUser")
-            .then(response => response.json())
-            .then(currUser => {
-                setCurrUser(currUser);
-                setLoading(false);
-            }).catch(error => {
-                console.log(error);
-                if (error)
-                    setUnauthorized(true);
-            })
+        if ({ user })
+            setLoading(false);
     }, []);
-
-    if (unauthorized)
-        return <div className="container">
-            <div className='text-center'>
-                <h1>Unauthorized</h1>
-            </div>
-        </div>
 
     if (loading) {
         return <p>Loading...</p>;
@@ -42,7 +28,7 @@ export default function Home() {
     return (
         <div className="container">
             <div className='text-center'>
-                <h1>You have officially signed in, {currUser.firstName}.</h1>
+                <h1>You have officially signed in, {user.role}: {user.firstName}.</h1>
             </div>
         </div>
     );
