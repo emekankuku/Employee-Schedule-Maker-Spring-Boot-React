@@ -1,2 +1,2 @@
 # Scheduling-Project-Spring-Boot-React
-This project will cover the basis of designing a scheduling system for a group of employees using Spring Boot and Reactjs/Bootstrap
+This project is meant for businesses to manage schedules among their employees and enable better communication between employees and managers regarding schedule adjustments and submitting requests for days off.  
