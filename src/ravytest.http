@@ -33,8 +33,8 @@ Access-Control-Allow-Credentials: true
 
 
 {
-     "groupName": "groupa",
-     "userEmail": "ravymiyazaki@gmail.com"
+     "name": "groupa",
+     "email": "ravymiyazaki@gmail.com"
  }
 
 ###
@@ -66,13 +66,9 @@ Access-Control-Allow-Credentials: true
 {
     "email": "ravymiyazaki@gmail.com",
     "group": "groupa",
-    "startYear": "2023",
-    "startMonth": "06",
-    "startDay": "20",
-    "endYear": "2023",
-    "endMonth": "06",
-    "endDay": "20",
-    "note": "I am sick"
+    "startDate": "",
+    "endDate": "",
+    "note": ""
 }
 
 ###

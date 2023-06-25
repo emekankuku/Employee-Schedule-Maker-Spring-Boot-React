@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import UserService from '../../Service/UserService';
-import Form from 'react-bootstrap/Form'
-import axios from 'axios';
 
 export default function Signup({ props }) {
 
@@ -30,18 +28,11 @@ export default function Signup({ props }) {
             .catch((error) => {
                 if (error.response.data.fieldErrors) {
                     var fieldErrors = error.response.data.fieldErrors;
-                    var newErrors = {
-                        firstName: '',
-                        lastName: '',
-                        email: '',
-                        password: '',
-                        role: ''
-                    };
+                    var newErrors = {};
                     fieldErrors.forEach(fieldError => {
-                        newErrors[fieldError.field] = fieldError.message;
+                        newErrors[fieldError.field] = fieldError.message
                     })
                     setErrors(newErrors);
-                    console.log(errors);
                 }
             });
     }
@@ -73,7 +64,6 @@ export default function Signup({ props }) {
     }
 
     const errorList = Object.entries(errors).map(([error, message]) => {
-        if (message)
             return (
                 <div>
                     <label class="errors">{message}</label>

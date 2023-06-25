@@ -1,29 +1,21 @@
-import { Button } from 'bootstrap';
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from '../Navbar';
-import GroupService from '../../Service/GroupService';
 import ScheduleService from '../../Service/ScheduleService';
-import axios from 'axios';
-import jwt_decode from "jwt-decode";
-import TimeRange from 'react-time-range';
-import TimePicker from '@mui/lab/TimePicker';
-import moment from "moment";
 
 export const AddSchedule = ({ user, group }) => {
 
     const [submission, setSubmission] = useState({
         email: user.email,
-        schedule: {
-            sunday: '',
-            monday: '',
-            tuesday: '',
-            wednesday: '',
-            thursday: '',
-            friday: '',
-            saturday: ''
-        }
+        group: group,
+        sunday: '',
+        monday: '',
+        tuesday: '',
+        wednesday: '',
+        thursday: '',
+        friday: '',
+        saturday: ''
+
     });
     const [schedule, setSchedule] = useState({
         sunday: {
@@ -55,37 +47,47 @@ export const AddSchedule = ({ user, group }) => {
             end: '00:00'
         }
     })
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState({})
     const [loading, setLoading] = useState(false);
-    const [startTime, setStartTime] = useState('00:00');
-    const [endTime, setEndTime] = useState('00:00');
 
     const navigate = useNavigate();
 
     useEffect(() => {
+        if (!user)
+            return;
         setLoading(true);
         if ({ user })
             setLoading(false);
-    }, []);
+        setSubmission({ ...submission, email: user.email });
+    }, [user, group]);
 
     const handleSubmit = e => {
         e.preventDefault();
-        var submissionSchedule = submission.schedule;
+        var submissionInput = submission;
         Object.keys(schedule || {}).map(
-            day =>{
+            day => {
                 var timeRange = schedule[day].start + "-" + schedule[day].end;
-                submissionSchedule[day] = timeRange;
-            }        
+                submission[day] = timeRange;
+            }
         )
-        setSubmission({...submission, schedule: submissionSchedule});
+
+        setSubmission(submissionInput)
+        // setSubmission({ ...submission, schedule: submissionSchedule });
 
         ScheduleService.createSchedule(submission)
             .then((response) => {
                 alert(submission.email + " has been successfully created its schedule");
-                navigate(-1)
+                navigate("/groups/" + group)
             })
             .catch((error) => {
-                console.log(error);
+                if (error.response.data.fieldErrors) {
+                    var fieldErrors = error.response.data.fieldErrors;
+                    var newErrors = {};
+                    fieldErrors.forEach(fieldError => {
+                        newErrors[fieldError.field] = fieldError.message
+                    })
+                    setErrors(newErrors);
+                }
             });
     }
 
@@ -117,13 +119,12 @@ export const AddSchedule = ({ user, group }) => {
 
 
     const errorList = Object.entries(errors).map(([error, message]) => {
-        if (message)
-            return (
-                <div>
-                    <label className="errors">{message}</label>
-                    <br></br>
-                </div>
-            )
+        return (
+            <div>
+                <label className="errors">{message}</label>
+                <br></br>
+            </div>
+        )
     })
 
     return (
@@ -156,9 +157,6 @@ export const AddSchedule = ({ user, group }) => {
             </div>
             <div>
             </div>
-            {user.email}
-            {schedule.monday.start}
-            {schedule.monday.end}
         </div>
     );
 }

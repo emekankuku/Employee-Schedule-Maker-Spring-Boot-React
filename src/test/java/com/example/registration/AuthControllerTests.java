@@ -16,11 +16,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.example.registration.Controller.AuthController;
-import com.example.registration.Repository.UserRepository;
-import com.example.registration.Service.UserService;
-import com.example.registration.dto.AuthenticationDtos.SignupDto;
-import com.example.registration.security.JwtTokenProvider;
+import com.example.build.Controller.AuthController;
+import com.example.build.Repository.UserRepository;
+import com.example.build.Service.UserService;
+import com.example.build.dto.AuthenticationDtos.SignupDto;
+import com.example.build.security.JwtTokenProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.junit.Test;

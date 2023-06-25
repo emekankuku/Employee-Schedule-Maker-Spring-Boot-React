@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import UserService from '../../Service/UserService';
-import axios from 'axios';
 
 export default function Login({ props }) {
 
@@ -28,16 +27,11 @@ export default function Login({ props }) {
             .catch((error) => {
                 if (error.response.data.fieldErrors) {
                     var fieldErrors = error.response.data.fieldErrors;
-                    var newErrors = {
-                        email: '',
-                        password: '',
-                        unauthorized: ''
-                    };
+                    var newErrors = {};
                     fieldErrors.forEach(fieldError => {
-                        newErrors[fieldError.field] = fieldError.message;
+                        newErrors[fieldError.field] = fieldError.message
                     })
                     setErrors(newErrors);
-                    console.log(newErrors);
                 }
             });
     }
@@ -53,13 +47,12 @@ export default function Login({ props }) {
     }
 
     const errorList = Object.entries(errors).map(([error, message]) => {
-        if (message)
-            return (
-                <div>
-                    <label className="errors">{message}</label>
-                    <br></br>
-                </div>
-            )
+        return (
+            <div>
+                <label className="errors">{message}</label>
+                <br></br>
+            </div>
+        )
     })
 
     return (

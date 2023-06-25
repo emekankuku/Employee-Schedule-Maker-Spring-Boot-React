@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 const BASE_URL = 'http://localhost:8080/grouping/';
 
@@ -55,6 +55,18 @@ class GroupService extends React.Component {
 
     showSchedules(group) {
         return axios.post(BASE_URL + 'getSchedules', group,
+            {
+                withCredentials: 'include', //Enables sending cookies from api to browser
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: "application/json"
+                }
+            }
+        )
+    }
+
+    showDaysOff(group) {
+        return axios.post(BASE_URL + 'getDaysOff', group,
             {
                 withCredentials: 'include', //Enables sending cookies from api to browser
                 headers: {

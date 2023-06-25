@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.registration.Repository.UserRepository;
-import com.example.registration.Service.UserService;
-import com.example.registration.dto.AuthenticationDtos.SignupDto;
-import com.example.registration.model.User;
+import com.example.build.Repository.UserRepository;
+import com.example.build.Service.UserService;
+import com.example.build.dto.AuthenticationDtos.SignupDto;
+import com.example.build.model.User;
 
 @SpringBootTest
 class UserServiceTests {

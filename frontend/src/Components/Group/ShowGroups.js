@@ -1,11 +1,7 @@
-import { Button } from 'bootstrap';
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from '../Navbar';
 import GroupService from '../../Service/GroupService';
-import axios from 'axios';
-import jwt_decode from "jwt-decode";
 
 export const ShowGroups = ({ user }) => {
 
@@ -27,7 +23,9 @@ export const ShowGroups = ({ user }) => {
 
     if (loading)
         return <p>Loading...</p>;
-
+    
+    if(groups.length == 0)
+        return <p>No groups can be show</p>
 
     return (
         <div className="container">
@@ -45,7 +43,7 @@ export const ShowGroups = ({ user }) => {
                         groups.map(
                             group =>
                                 <tr key={group.name}>
-                                    <td> <Link to={'/groups/' + group.name} params={{ name: "hello" }} state={group.name}>{group.name}</Link></td>
+                                    <td> <Link to={'/groups/' + group.name} state={group.name}>{group.name}</Link></td>
                                     <button value={group.name}>Button</button>
                                 </tr>
                         )

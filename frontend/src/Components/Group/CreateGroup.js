@@ -1,17 +1,13 @@
-import { Button } from 'bootstrap';
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from '../Navbar';
 import GroupService from '../../Service/GroupService';
-import axios from 'axios';
-import jwt_decode from "jwt-decode";
 
 export const CreatGroup = ({ user }) => {
 
     const [group, setGroup] = useState({
         name: '',
-        userEmail: user.email
+        email: user.email
     });
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
@@ -26,6 +22,7 @@ export const CreatGroup = ({ user }) => {
 
     const handleSubmit = e => {
         e.preventDefault();
+        console.log(group.email);
         GroupService.createGroup(group)
             .then((response) => {
                 alert("Creation Successful");

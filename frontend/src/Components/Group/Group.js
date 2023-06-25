@@ -1,10 +1,6 @@
-import { Button } from 'bootstrap';
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useParams } from "react-router-dom";
-import axios from 'axios';
-import jwt_decode from "jwt-decode";
 import GroupService from '../../Service/GroupService';
 
 export const Group = ({ user, group }) => {
@@ -31,7 +27,7 @@ export const Group = ({ user, group }) => {
     return (
         <div className="container">
             <div className='text-center'>
-                <h1>This is group, {group}</h1>
+                <h1> {group}</h1>
                 <table className="table table-striped">
                 <thead>
                     <tr>
@@ -54,7 +50,9 @@ export const Group = ({ user, group }) => {
             </table>
             <Link class="navbar-brand" to={'/addUser/' + group}>Add User</Link><br></br>
             <Link class="navbar-brand" to={'/showSchedules/' + group}>Show Schedules</Link><br></br>
-            <Link class="navbar-brand" to='/addSchedule/'>Add Schedule</Link>
+            <Link class="navbar-brand" to={'/addSchedule/' + group}>Add Schedule</Link><br></br>
+            <Link class="navbar-brand" to={'/showDaysOff/' + group}>Show Days Off</Link><br></br>
+            <Link class="navbar-brand" to={'/addDaysOff/' + group}>Add Days Off</Link>
             </div>
         </div>
     );

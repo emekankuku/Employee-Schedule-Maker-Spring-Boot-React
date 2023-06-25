@@ -14,6 +14,8 @@ import { ShowGroups } from './Components/Group/ShowGroups';
 import { AddUser } from './Components/Group/AddUser';
 import { ShowSchedules } from './Components/Schedule/ShowSchedules';
 import { AddSchedule } from './Components/Schedule/AddSchedule';
+import { ShowDaysOff } from './Components/Schedule/ShowDaysOff';
+import { AddDaysOff } from './Components/Schedule/AddDaysOff';
 import PrivateRoute from './Components/PrivateRoute';
 
 function App() {
@@ -30,7 +32,9 @@ function App() {
           <Route path="/groups/:groupName" element={<PrivateRoute child={<Group />} role="" hideNav="false" />} />
           <Route path="/addUser/:groupName" element={<PrivateRoute child={<AddUser />} role="" hideNav="false" />} />
           <Route path="/showSchedules/:groupName" element={<PrivateRoute child={<ShowSchedules />} role="" hideNav="false" />} />
-          <Route path="/addSchedule/" element={<PrivateRoute child={<AddSchedule />} role="" hideNav="false" />} />
+          <Route path="/addSchedule/:groupName" element={<PrivateRoute child={<AddSchedule />} role="" hideNav="false" />} />
+          <Route path="/showDaysOff/:groupName" element={<PrivateRoute child={<ShowDaysOff />} role="" hideNav="false" />} />
+          <Route path="/addDaysOff/:groupName" element={<PrivateRoute child={<AddDaysOff />} role="" hideNav="false" />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>
