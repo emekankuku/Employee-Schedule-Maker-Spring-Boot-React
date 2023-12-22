@@ -2,8 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import GroupService from '../../Service/GroupService';
+import GroupModule from './CreateGroup';
 
 export const ShowGroups = ({ user }) => {
+
+    const [show, setShow] = useState(false);
+
+    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false);
 
     const [groups, setGroups] = useState([]);
     const [loading, setLoading] = useState(false)
@@ -23,34 +29,28 @@ export const ShowGroups = ({ user }) => {
 
     if (loading)
         return <p>Loading...</p>;
-    
-    if(groups.length == 0)
+
+    if (groups.length == 0)
         return <p>No groups can be show</p>
 
     return (
-        <div className="container">
-            <h1 className="text-center"> Group List:</h1>
-
-            <table className="table table-striped">
-                <thead>
-                    <tr>
-                        <th> Group Name</th>
-                    </tr>
-
-                </thead>
-                <tbody>
+        <div>
+            <div class="homepage-container">
+                <div class="text-center">
+                    <h1> {user.firstName}'s Groups:</h1>
                     {
                         groups.map(
                             group =>
-                                <tr key={group.name}>
-                                    <td> <Link to={'/groups/' + group.name} state={group.name}>{group.name}</Link></td>
-                                    <button value={group.name}>Button</button>
-                                </tr>
+                                <p class="list-item"> <Link class="navbar-brand" to={'/groups/' + group.name} state={group.name}>{group.name}</Link></p>
                         )
                     }
 
-                </tbody>
-            </table>
+                    <button type="button" class="btn btn-primary" onClick={handleShow}>
+                        Create Group
+                    </button>
+                </div>
+                <GroupModule user={user} show={show} onClose={handleClose} />
+            </div>
         </div>
     )
 }

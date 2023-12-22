@@ -15,6 +15,7 @@ import com.example.build.dto.DaysOffDtos.DaysOffOutputDto;
 import com.example.build.dto.GroupDtos.CreateGroupDto;
 import com.example.build.dto.GroupDtos.GroupDto;
 import com.example.build.dto.GroupDtos.addUserDto;
+import com.example.build.dto.ScheduleDtos.SchedOutput;
 import com.example.build.dto.ScheduleDtos.scheduleDto;
 
 @RestController
@@ -50,7 +51,7 @@ public class GroupController {
     }
 
     @PostMapping("/getSchedules")
-    public List<scheduleDto> getSchedules(@RequestBody GroupDto dto) {
+    public List<SchedOutput> getSchedules(@RequestBody GroupDto dto) {
         return groupService.getSchedules(dto);
     }
 

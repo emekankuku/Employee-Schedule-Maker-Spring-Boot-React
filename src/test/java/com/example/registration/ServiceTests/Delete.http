@@ -1,0 +1,43 @@
+POST http://localhost:8080/registration/deleteUser
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+{
+     "email": "ravymiyazaki@gmail.com"
+ }
+
+###
+
+POST http://localhost:8080/grouping/deleteGroup
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+{
+     "name": "groupa"
+ }
+
+###
+
+POST http://localhost:8080/schedule/deleteSchedule
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+{
+    "email": "ravymiyazaki@gmail.com",
+    "group": "groupa"
+}
+
+###
+
+POST http://localhost:8080/schedule/deleteDaysOff
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+{
+    "email": "ravymiyazaki@gmail.com",
+    "group": "groupa"
+}

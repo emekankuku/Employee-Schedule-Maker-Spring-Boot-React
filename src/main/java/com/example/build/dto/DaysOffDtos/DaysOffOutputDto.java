@@ -10,11 +10,11 @@ import jakarta.validation.constraints.Size;
 
 public class DaysOffOutputDto {
 
-    private String email;
+    private String name;
 
-    private String startDate;
+    private String start;
 
-    private String endDate;
+    private String end;
 
     @NotNull(message = "Note is required")
     @Size(min = 1, message = "Note is required")
@@ -23,43 +23,43 @@ public class DaysOffOutputDto {
     public DaysOffOutputDto() {
     }
 
-    public DaysOffOutputDto(String email, LocalDate startDate, LocalDate endDate, String note) {
-        this.email = email;
-        this.startDate = startDate.getMonthValue() + '-' + startDate.getDayOfMonth() + "-" + startDate.getYear();
-        this.endDate = endDate.getMonthValue() + '-' + endDate.getDayOfMonth() + "-" + endDate.getYear();;
+    public DaysOffOutputDto(String name, LocalDate start, LocalDate end, String note) {
+        this.name = name;
+        this.start = start.getMonthValue() + '-' + start.getDayOfMonth() + "-" + start.getYear();
+        this.end = end.getMonthValue() + '-' + end.getDayOfMonth() + "-" + end.getYear();;
         this.note = note;
     }
     
 
     public DaysOffOutputDto(DaysOff daysOff){
-        this.email = daysOff.getEmail();
-        this.startDate = daysOff.getStartDate().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-        this.endDate = daysOff.getEndDate().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+        this.name = daysOff.getFullName();
+        this.start = daysOff.getStart().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+        this.end = daysOff.getEnd().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
         this.note = daysOff.getNote();
     }
 
-    public String getEmail() {
-        return email;
+    public String getName() {
+        return name;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public String getStart() {
+        return start;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate.getMonthValue() + '-' + startDate.getDayOfMonth() + "-" + startDate.getYear();
+    public void setStart(LocalDate start) {
+        this.start = start.getMonthValue() + '-' + start.getDayOfMonth() + "-" + start.getYear();
     }
 
-    public String getEndDate() {
-        return endDate;
+    public String getEnd() {
+        return end;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate.getMonthValue() + '-' + endDate.getDayOfMonth() + "-" + endDate.getYear();;
+    public void setEnd(LocalDate end) {
+        this.end = end.getMonthValue() + '-' + end.getDayOfMonth() + "-" + end.getYear();
     }
 
     public String getNote() {

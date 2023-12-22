@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import GroupService from '../../Service/GroupService';
+import Modal from 'react-bootstrap/Modal';
 
-export const CreatGroup = ({ user }) => {
+
+const CreateGroup = ({ user, show, onClose }) => {
 
     const [group, setGroup] = useState({
         name: '',
@@ -26,7 +28,7 @@ export const CreatGroup = ({ user }) => {
         GroupService.createGroup(group)
             .then((response) => {
                 alert("Creation Successful");
-                navigate("/")
+                window.location.reload(false);
             })
             .catch((error) => {
                 if (error.response.data.fieldErrors) {
@@ -69,25 +71,33 @@ export const CreatGroup = ({ user }) => {
 
 
     return (
-        <div className="container margin-bottom">
-            <div class="text-center">
-
-                <div>{errorList}</div>
-
+        <div>
+            <Modal show={show} onHide={onClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Create Group</Modal.Title>
+                </Modal.Header>
                 <form onSubmit={handleSubmit}>
-                    <div class="form-group row margin-bottom">
-                        <label class="col-sm-3 col-form-label"> Name:</label>
+                    <Modal.Body>
+                        {errorList}
+                        <div class="form-group row margin-bottom">
+                        <label class="col-sm-3 col-form-label"> Group Name:</label>
                         <div class="col-sm-7">
                             <input type="name" class="form-control" name="name" id="email" placeholder="Enter Group Name" value={group.name} onChange={handleChange} />
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-success">Create Group</button><br></br>
-                    </div>
-
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button type="button" class="btn btn-secondary" onClick={onClose}>
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-primary" onClick={handleSubmit}>
+                            Submit
+                        </button>
+                    </Modal.Footer>
                 </form>
-            </div>
+            </Modal>
         </div>
     );
-}
+};
+
+export default CreateGroup;

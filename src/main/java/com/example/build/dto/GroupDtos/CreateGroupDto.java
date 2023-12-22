@@ -1,13 +1,6 @@
 package com.example.build.dto.GroupDtos;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-
-public class CreateGroupDto {
-
-    @NotNull(message = "Group name is required")
-    @Size(min = 1, message = "Group name is required")
-    private String name;
+public class CreateGroupDto extends GroupDto{
 
     private String email;
 
@@ -16,12 +9,8 @@ public class CreateGroupDto {
     }
 
     public CreateGroupDto(String name, String email) {
-        this.name = name;
+        super(name);
         this.email = email;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public String getEmail(){

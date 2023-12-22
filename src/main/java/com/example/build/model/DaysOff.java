@@ -27,6 +27,9 @@ public class DaysOff {
     private String email;
 
     @Column(nullable = false)
+    private String fullName;
+
+    @Column(nullable = false)
     private LocalDate startDate;
 
     @Column(nullable = false)
@@ -51,8 +54,8 @@ public class DaysOff {
 
     public DaysOff(daysOffDto dto) {
         this.email = dto.getEmail();
-        this.startDate = LocalDate.parse(dto.getStartDate(), DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-        this.endDate = LocalDate.parse(dto.getEndDate(), DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+        this.startDate = LocalDate.parse(dto.getStart(), DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+        this.endDate = LocalDate.parse(dto.getEnd(), DateTimeFormatter.ofPattern("MM/dd/yyyy"));
         this.note = dto.getNote();
     }
 
@@ -72,19 +75,19 @@ public class DaysOff {
         this.email = email;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDate getStart() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStart(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDate getEnd() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEnd(LocalDate endDate) {
         this.endDate = endDate;
     }
 
@@ -103,5 +106,15 @@ public class DaysOff {
     public void setGroup(Group group) {
         this.group = group;
     }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    
 
 }

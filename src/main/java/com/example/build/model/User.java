@@ -3,6 +3,8 @@ package com.example.build.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.example.build.dto.AuthenticationDtos.SignupDto;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
@@ -14,6 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 
 @Entity
@@ -67,6 +70,14 @@ public class User {
         this.role = role;
     }
 
+    public User(SignupDto dto) {
+        this.firstName = dto.getFirstName();
+        this.lastName = dto.getLastName();
+        this.email = dto.getEmail();
+        this.password = dto.getPassword();
+        this.role = dto.getRole();
+    }
+
     public Long getId() {
         return id;
     }
@@ -77,6 +88,10 @@ public class User {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getFullName(){
+        return firstName + " " + lastName;
     }
 
     public String getEmail() {
@@ -131,13 +146,11 @@ public class User {
         groups.remove(group);
     }
 
-    // public Schedule getSchedule() {
-    //     return schedule;
-    // }
-
-    // public void setSchedule(Schedule schedule) {
-    //     this.schedule = schedule;
-    // }
+    @PreRemove
+    public void whenUserDeleted(){
+        for(Group group: groups)
+            group.removeUser(this);
+    }
 
     
 

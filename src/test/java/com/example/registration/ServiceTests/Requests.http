@@ -1,0 +1,32 @@
+POST http://localhost:8080/requests/schedules
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+
+{
+     "email": "ravymiyazaki@gmail.com"
+ }
+
+### 
+
+POST http://localhost:8080/requests/approve
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+
+{
+    "name": "Ravy Miyazaki",
+    "email": "ravymiyazaki@gmail.com",
+    "group": "groupa",
+    "sunday": "02:00-22:00",
+    "monday": "02:00-22:00",
+    "tuesday": "02:00-22:00",
+    "wednesday": "02:00-22:00",
+    "thursday": "02:00-22:00",
+    "friday": "02:00-22:00",
+    "saturday": "02:00-22:00"
+}
+
+### 

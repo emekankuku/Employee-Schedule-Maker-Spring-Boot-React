@@ -1,136 +1,144 @@
 package com.example.build.dto.ScheduleDtos;
 
 import com.example.build.model.Schedule;
+import com.example.build.model.Requests.SchedRequest;
+
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public class scheduleDto {
 
-    private String email;
+    final String timeRequired = "Time is required";
+    //Below regex indicates that time variables can either be an empty string or follow 'hh:mm-hh:mm'
+    final String regex = "(^$|^([0-1]?[0-9]|2[0-3]):[0-5][0-9]-([0-1]?[0-9]|2[0-3]):[0-5][0-9]$)";
+    final String incorrect = "Incorrect Time Range Format";
 
-    @NotNull(message = "Time is required")
-    @Size(min = 1, message = "Time is required")
-    @Pattern(regexp = "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]-([0-1]?[0-9]|2[0-3]):[0-5][0-9]$", message = "Incorrect Time Range Format")
-    private String sunday;
+    // @NotNull(message = timeRequired)
+    // @Size(min = 1, message = timeRequired)
+    @Pattern(regexp = regex, message = incorrect)
+    private String Sun = "";
 
-    @NotNull(message = "Time is required")
-    @Size(min = 1, message = "Time is required")
-    @Pattern(regexp = "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]-([0-1]?[0-9]|2[0-3]):[0-5][0-9]$", message = "Incorrect Time Range Format")
-    private String monday;
+    // @NotNull(message = timeRequired)
+    // @Size(min = 1, message = timeRequired)
+    @Pattern(regexp = regex, message = incorrect)
+    private String Mon = "";
 
-    @NotNull(message = "Time is required")
-    @Size(min = 1, message = "Time is required")
-    @Pattern(regexp = "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]-([0-1]?[0-9]|2[0-3]):[0-5][0-9]$", message = "Incorrect Time Range Format")
-    private String tuesday;
+    // @NotNull(message = timeRequired)
+    // @Size(min = 1, message = timeRequired)
+    @Pattern(regexp = regex, message = incorrect)
+    private String Tue = "";
 
-    @NotNull(message = "Time is required")
-    @Size(min = 1, message = "Time is required")
-    @Pattern(regexp = "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]-([0-1]?[0-9]|2[0-3]):[0-5][0-9]$", message = "Incorrect Time Range Format")
-    private String wednesday;
+    // @NotNull(message = timeRequired)
+    // @Size(min = 1, message = timeRequired)
+    @Pattern(regexp = regex, message = incorrect)
+    private String Wed = "";
 
-    @NotNull(message = "Time is required")
-    @Size(min = 1, message = "Time is required")
-    @Pattern(regexp = "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]-([0-1]?[0-9]|2[0-3]):[0-5][0-9]$", message = "Incorrect Time Range Format")
-    private String thursday;
+    // @NotNull(message = timeRequired)
+    // @Size(min = 1, message = timeRequired)
+    @Pattern(regexp = regex, message = incorrect)
+    private String Thur = "";
 
-    @NotNull(message = "Time is required")
-    @Size(min = 1, message = "Time is required")
-    @Pattern(regexp = "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]-([0-1]?[0-9]|2[0-3]):[0-5][0-9]$", message = "Incorrect Time Range Format")
-    private String friday;
+    // @NotNull(message = timeRequired)
+    // @Size(min = 1, message = timeRequired)
+    @Pattern(regexp = regex, message = incorrect)
+    private String Fri = "";
 
-    @NotNull(message = "Time is required")
-    @Size(min = 1, message = "Time is required")
-    @Pattern(regexp = "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]-([0-1]?[0-9]|2[0-3]):[0-5][0-9]$", message = "Incorrect Time Range Format")
-    private String saturday;
+    // @NotNull(message = timeRequired)
+    // @Size(min = 1, message = timeRequired)
+    @Pattern(regexp = regex, message = incorrect)
+    private String Sat = "";
 
     public scheduleDto() {
     }
 
     public scheduleDto(String sunday, String monday, String tuesday, String wednesday, String thursday,
             String friday, String saturday) {
-        this.sunday = sunday;
-        this.monday = monday;
-        this.tuesday = tuesday;
-        this.wednesday = wednesday;
-        this.thursday = thursday;
-        this.friday = friday;
-        this.saturday = saturday;
+        Sun = sunday;
+        Mon = monday;
+        Tue = tuesday;
+        Wed = wednesday;
+        Thur = thursday;
+        Fri = friday;
+        Sat = saturday;
     }
 
     public scheduleDto(Schedule dto) {
-        this.email = dto.getName();
-        this.sunday = dto.getSunday();
-        this.monday = dto.getMonday();
-        this.tuesday = dto.getTuesday();
-        this.wednesday = dto.getWednesday();
-        this.thursday = dto.getThursday();
-        this.friday = dto.getFriday();
-        this.saturday = dto.getSaturday();
+        Sun = dto.getSunday();
+        Mon = dto.getMonday();
+        Tue = dto.getTuesday();
+        Wed = dto.getWednesday();
+        Thur = dto.getThursday();
+        Fri = dto.getFriday();
+        Sat = dto.getSaturday();
     }
 
-    public String getSunday() {
-        return sunday;
+    public scheduleDto(SchedRequest dto) {
+        Sun = dto.getSunday();
+        Mon = dto.getMonday();
+        Tue = dto.getTuesday();
+        Wed = dto.getWednesday();
+        Thur = dto.getThursday();
+        Fri = dto.getFriday();
+        Sat = dto.getSaturday();
     }
 
-    public void setSunday(String sunday) {
-        this.sunday = sunday;
-    }
+   
 
-    public String getMonday() {
-        return monday;
-    }
+public String getSun() {
+    return Sun;
+}
 
-    public void setMonday(String monday) {
-        this.monday = monday;
-    }
+public void setSun(String sun) {
+    Sun = sun;
+}
 
-    public String getTuesday() {
-        return tuesday;
-    }
+public String getMon() {
+    return Mon;
+}
 
-    public void setTuesday(String tuesday) {
-        this.tuesday = tuesday;
-    }
+public void setMon(String mon) {
+    Mon = mon;
+}
 
-    public String getWednesday() {
-        return wednesday;
-    }
+public String getTue() {
+    return Tue;
+}
 
-    public void setWednesday(String wednesday) {
-        this.wednesday = wednesday;
-    }
+public void setTue(String tue) {
+    Tue = tue;
+}
 
-    public String getThursday() {
-        return thursday;
-    }
+public String getWed() {
+    return Wed;
+}
 
-    public void setThursday(String thursday) {
-        this.thursday = thursday;
-    }
+public void setWed(String wed) {
+    Wed = wed;
+}
 
-    public String getFriday() {
-        return friday;
-    }
+public String getThur() {
+    return Thur;
+}
 
-    public void setFriday(String friday) {
-        this.friday = friday;
-    }
+public void setThur(String thur) {
+    Thur = thur;
+}
 
-    public String getSaturday() {
-        return saturday;
-    }
+public String getFri() {
+    return Fri;
+}
 
-    public void setSaturday(String saturday) {
-        this.saturday = saturday;
-    }
+public void setFri(String fri) {
+    Fri = fri;
+}
 
-    public String getEmail() {
-        return email;
-    }
+public String getSat() {
+    return Sat;
+}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+public void setSat(String sat) {
+    Sat = sat;
+} 
 
 }

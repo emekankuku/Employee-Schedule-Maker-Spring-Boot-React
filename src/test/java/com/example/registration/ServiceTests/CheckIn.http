@@ -1,0 +1,38 @@
+POST http://localhost:8080/checkIn/checkIn
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+
+{
+     "group": "groupa",
+     "email": "ravymiyazaki@gmail.com"
+ }
+
+### 
+
+POST http://localhost:8080/checkIn/recentCheckIn
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+
+{
+     "group": "groupa",
+     "email": "ravymiyazaki@gmail.com"
+ }
+
+### 
+
+POST http://localhost:8080/checkIn/recentCheckIn
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+
+{
+     "group": "groupa",
+     "email": "emekankuku@gmail.com"
+ }
+
+### 

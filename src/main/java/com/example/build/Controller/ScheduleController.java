@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.build.Service.ScheduleService;
+import com.example.build.dto.CheckIn.CheckInDto;
 import com.example.build.dto.DaysOffDtos.daysOffDto;
 import com.example.build.dto.ScheduleDtos.CreateScheduleDto;
+import com.example.build.dto.ScheduleDtos.SchedOutput;
 import com.example.build.dto.ScheduleDtos.deleteScheduleDto;
 import com.example.build.dto.ScheduleDtos.scheduleDto;
 import jakarta.validation.Valid;
@@ -31,6 +33,11 @@ public class ScheduleController {
         return scheduleService.createSchedule(dto);
     }
 
+    @PostMapping("/getSchedule")
+    public scheduleDto createSchedule(@Valid @RequestBody CheckInDto dto) {
+        return scheduleService.getSchedule(dto);
+    }
+
     @PostMapping("/createDaysOff")
     public daysOffDto createDaysOff(@Valid @RequestBody daysOffDto dto) {
         return scheduleService.createDaysOff(dto);
@@ -41,9 +48,9 @@ public class ScheduleController {
         return scheduleService.deleteSchedule(dto);
     }
 
-    @PostMapping("/deleteDaysOff")
-    public String deleteDaysOff(@RequestBody deleteScheduleDto dto) {
-        return scheduleService.deleteDaysOff(dto);
-    }
+    // @PostMapping("/deleteDaysOff")
+    // public String deleteDaysOff(@RequestBody deleteScheduleDto dto) {
+    //     return scheduleService.deleteDaysOff(dto);
+    // }
 
 }

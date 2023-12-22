@@ -1,8 +1,9 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Paytone+One&display=swap'); */
+
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  /* font-family: 'Paytone One', sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -11,3 +12,88 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+section {
+  padding: 55px 0px
+}
+
+.container {
+  font-family: 'Paytone One', sans-serif;
+}
+
+.homepage-container {
+  padding-top: 56px;
+  font-family: 'Paytone One', sans-serif;
+}
+
+.title {
+  padding-bottom: 20px;
+}
+
+.list-block {
+  padding: 5px 10px 35px;
+  border: 1px solid;
+  border-radius: 25px;
+}
+
+.list-item {
+  color: gray;
+}
+
+.button-pad {
+  padding-bottom: 20px;
+}
+
+.group-nav {
+  text-align: center;
+}
+
+.checkIn {
+  padding: 5px
+}
+
+.my-modal {
+  width: 80%;
+  min-width: 80%;
+}
+
+.navbar-brand.abs {
+  position: absolute;
+  width: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 2.1rem;
+}
+
+.sticky-top {
+  padding-top: 56px;
+}
+
+
+
+table {
+  width: 100%;
+}
+
+thead{
+  /* Capitalizes words */
+  text-transform: capitalize; 
+}
+
+thead, tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+tbody {
+  display: block;
+  overflow-y: auto;
+  table-layout: fixed;
+  max-height: 300px;
+  font-size: 10px;
+}
+
+/* .dateSize{
+  font-size: 10px;
+} */

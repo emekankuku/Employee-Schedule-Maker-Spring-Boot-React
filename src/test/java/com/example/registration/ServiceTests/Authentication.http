@@ -1,0 +1,53 @@
+POST http://localhost:8080/registration/signup
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+{
+     "firstName": "ravy",
+     "lastName": "miyazaki",
+     "email": "ravymiyazaki@gmail.com",
+     "password": "Asdfghjkl2;",
+     "role": "Manager"
+ }
+
+###
+
+POST http://localhost:8080/registration/signin
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+
+{
+     "email": "ravymiyazaki@gmail.com",
+     "password": "Asdfghjkl2;"
+ }
+
+###
+
+POST http://localhost:8080/registration/signup
+Content-Type: application/json
+
+{
+     "firstName": "emeka",
+     "lastName": "nkuku",
+     "email": "emekankuku@gmail.com",
+     "password": "Asdfghjkl1;",
+     "role": "Employee"
+ }
+
+
+###
+
+POST http://localhost:8080/registration/signin
+Content-Type: application/json
+# Accept: application/json
+# Access-Control-Allow-Credentials: true
+
+{
+     "email": "emekankuku@gmail.com",
+     "password": "Asdfghjkl1;"
+ }
+
+###

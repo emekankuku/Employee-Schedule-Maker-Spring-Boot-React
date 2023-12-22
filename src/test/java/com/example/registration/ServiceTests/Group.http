@@ -1,0 +1,54 @@
+
+POST http://localhost:8080/grouping/createGroup
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+
+{
+     "name": "groupa",
+     "email": "ravymiyazaki@gmail.com"
+ }
+
+###
+
+POST http://localhost:8080/grouping/getGroups
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+
+{
+     "firstName": "Ravy",
+     "lastName": "Miyazaki",
+     "email": "ravymiyazaki@gmail.com",
+     "role": "Manager"
+ }
+
+### 
+
+POST http://localhost:8080/grouping/addUser
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+
+{
+     "groupName": "groupa",
+     "managerEmail": "ravymiyazaki@gmail.com",
+     "employeeEmail": "emekankuku@gmail.com"
+ }
+
+###
+
+POST http://localhost:8080/grouping/getUsers
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+
+{
+     "name": "groupa"
+ }
+
+###

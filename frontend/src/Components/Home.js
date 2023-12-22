@@ -23,7 +23,8 @@ export const Home = ({ user }) => {
     return (
         <div className="container">
             <div className='text-center'>
-                <h1>You have officially signed in, {user.role}: {user.firstName}.</h1>
+                <h1>Welcome, {user.firstName}!</h1>
+                <button>Create Group</button><br></br>
             </div>
         </div>
     );

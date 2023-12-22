@@ -1,5 +1,9 @@
 package com.example.build.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.example.build.dto.Requests.SchedRequestDto;
 import com.example.build.dto.ScheduleDtos.CreateScheduleDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,25 +27,28 @@ public class Schedule {
     private String email;
 
     @Column(nullable = false)
-    private String sunday;
+    private String fullName;
 
     @Column(nullable = false)
-    private String monday;
+    private String Sunday;
 
     @Column(nullable = false)
-    private String tuesday;
+    private String Monday;
 
     @Column(nullable = false)
-    private String wednesday;
+    private String Tuesday;
 
     @Column(nullable = false)
-    private String thursday;
+    private String Wednesday;
 
     @Column(nullable = false)
-    private String friday;
+    private String Thursday;
 
     @Column(nullable = false)
-    private String saturday;
+    private String Friday;
+
+    @Column(nullable = false)
+    private String Saturday;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id", referencedColumnName = "id")
@@ -54,80 +61,91 @@ public class Schedule {
             String friday,
             String saturday) {
         this.email = email;
-        this.sunday = sunday;
-        this.monday = monday;
-        this.tuesday = tuesday;
-        this.wednesday = wednesday;
-        this.thursday = thursday;
-        this.friday = friday;
-        this.saturday = saturday;
+        Sunday = sunday;
+        Monday = monday;
+        Tuesday = tuesday;
+        Wednesday = wednesday;
+        Thursday = thursday;
+        Friday = friday;
+        Saturday = saturday;
     }
 
     public Schedule(CreateScheduleDto dto) {
         this.email = dto.getEmail();
-        this.sunday = dto.getSunday();
-        this.monday = dto.getMonday();
-        this.tuesday = dto.getTuesday();
-        this.wednesday = dto.getWednesday();
-        this.thursday = dto.getThursday();
-        this.friday = dto.getFriday();
-        this.saturday = dto.getSaturday();
+        Sunday = dto.getSun();
+        Monday = dto.getMon();
+        Tuesday = dto.getTue();
+        Wednesday = dto.getWed();
+        Thursday = dto.getThur();
+        Friday = dto.getFri();
+        Saturday = dto.getSat();
+    }
+
+    public Schedule(SchedRequestDto dto) {
+        this.email = dto.getEmail();
+        Sunday = dto.getSun();
+        Monday = dto.getMon();
+        Tuesday = dto.getTue();
+        Wednesday = dto.getWed();
+        Thursday = dto.getThur();
+        Friday = dto.getFri();
+        Saturday = dto.getSat();
     }
 
     public String getSunday() {
-        return sunday;
+        return Sunday;
     }
 
     public void setSunday(String sunday) {
-        this.sunday = sunday;
+        Sunday = sunday;
     }
 
     public String getMonday() {
-        return monday;
+        return Monday;
     }
 
     public void setMonday(String monday) {
-        this.monday = monday;
+        Monday = monday;
     }
 
     public String getTuesday() {
-        return tuesday;
+        return Tuesday;
     }
 
     public void setTuesday(String tuesday) {
-        this.tuesday = tuesday;
+        Tuesday = tuesday;
     }
 
     public String getWednesday() {
-        return wednesday;
+        return Wednesday;
     }
 
     public void setWednesday(String wednesday) {
-        this.wednesday = wednesday;
+        Wednesday = wednesday;
     }
 
     public String getThursday() {
-        return thursday;
+        return Thursday;
     }
 
     public void setThursday(String thursday) {
-        this.thursday = thursday;
+        Thursday = thursday;
     }
 
     public String getFriday() {
-        return friday;
+        return Friday;
     }
 
     public void setFriday(String friday) {
-        this.friday = friday;
+        Friday = friday;
     }
 
     public String getSaturday() {
-        return saturday;
+        return Saturday;
     }
 
     public void setSaturday(String saturday) {
-        this.saturday = saturday;
+        Saturday = saturday;
     }
 
     public String getName() {
@@ -153,4 +171,34 @@ public class Schedule {
     public void setGroup(Group group) {
         this.group = group;
     }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public Map<String, String> scheduleMap() {
+        Map<String, String> map = new HashMap<>();
+        map.put("sunday", Sunday);
+        map.put("monday", Monday);
+        map.put("tuesday", Tuesday);
+        map.put("wednesday", Wednesday);
+        map.put("thursday", Thursday);
+        map.put("friday", Friday);
+        map.put("saturday", Saturday);
+
+        return map;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 }

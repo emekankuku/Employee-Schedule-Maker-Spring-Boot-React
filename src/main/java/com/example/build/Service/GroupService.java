@@ -18,6 +18,7 @@ import com.example.build.dto.DaysOffDtos.DaysOffOutputDto;
 import com.example.build.dto.GroupDtos.CreateGroupDto;
 import com.example.build.dto.GroupDtos.GroupDto;
 import com.example.build.dto.GroupDtos.addUserDto;
+import com.example.build.dto.ScheduleDtos.SchedOutput;
 import com.example.build.dto.ScheduleDtos.scheduleDto;
 import com.example.build.exceptions.DuplicateGroupException;
 import com.example.build.exceptions.DuplicateUserException;
@@ -25,6 +26,7 @@ import com.example.build.model.DaysOff;
 import com.example.build.model.Group;
 import com.example.build.model.Schedule;
 import com.example.build.model.User;
+import com.example.build.sorting.Sorting;
 
 import java.util.Calendar;
 
@@ -40,6 +42,10 @@ public class GroupService {
     @Autowired
     private DaysOffRepository daysOffRepository;
 
+    final String message = "";
+
+    Sorting sorting = new Sorting();
+
     public GroupDto createGroup(CreateGroupDto dto) {
         System.out.println("This is group name: " + dto.getName());
         System.out.println("This is email: " + dto.getEmail());
@@ -50,6 +56,7 @@ public class GroupService {
         if (!user.getRole().equals("Manager"))
             throw new DuplicateUserException("Unauthorized");
         group.addUser(user);
+        group.setLeader(user.getEmail());
         return new GroupDto(groupRepository.save(group));
     }
 
@@ -59,7 +66,7 @@ public class GroupService {
         User employee = userRepository.findByEmail(dto.getEmployeeEmail());
         if (group == null)
             throw new IllegalStateException("Group does not exist");
-        if (!manager.getRole().equals("Manager"))
+        if (!manager.getEmail().equals(group.getLeader()))
             throw new DuplicateUserException("Unauthorized");
         if (employee == null)
             throw new IllegalStateException("User does not exist");
@@ -75,7 +82,7 @@ public class GroupService {
         List<GroupDto> list = new ArrayList<>();
         for (Group group : user.getGroups())
             list.add(new GroupDto(group));
-        return list;
+        return sorting.sortGroups(list);
     }
 
     public List<UserDto> getUsers(GroupDto dto) {
@@ -85,23 +92,25 @@ public class GroupService {
         List<UserDto> list = new ArrayList<>();
         for (User user : group.getUsers())
             list.add(new UserDto(user));
-        return list;
+        return sorting.sortUsers(list);
     }
 
-    public List<scheduleDto> getSchedules(GroupDto dto) {
+    public List<SchedOutput> getSchedules(GroupDto dto) {
         Group group = groupRepository.findByName(dto.getName());
         if (group == null)
             throw new IllegalStateException("Group does not exist");
-        List<scheduleDto> schedules = new ArrayList<>();
+        List<SchedOutput> schedules = new ArrayList<>();
         for (Schedule schedule : group.getSchedules()) {
-            DaysOff daysOff = daysOffRepository.findByEmailAndGroup_id(schedule.getName(), group.getId());
-            if (daysOff != null)
-                schedule = daysOffSchedule(daysOff, schedule);
-            scheduleDto scheduleDto = new scheduleDto(schedule);
-            schedules.add(scheduleDto);
+            List<DaysOff> daysOff = daysOffRepository.findByEmailAndGroup_id(schedule.getName(), group.getId());
+            for (DaysOff dayOff : daysOff) {
+                if (daysOff != null)
+                    schedule = daysOffSchedule(dayOff, schedule);
+            }
+            SchedOutput output = new SchedOutput(schedule);
+            schedules.add(output);
         }
 
-        return schedules;
+        return sorting.sortSchedules(schedules);
     }
 
     public List<DaysOffOutputDto> getDaysOff(GroupDto dto) {
@@ -114,7 +123,7 @@ public class GroupService {
             daysOffList.add(daysOffDto);
         }
 
-        return daysOffList;
+        return sorting.sortDaysOff(daysOffList);
     }
 
     // Deletes group by name
@@ -129,8 +138,7 @@ public class GroupService {
 
     public Schedule daysOffSchedule(DaysOff daysOff, Schedule schedule) {
         TemporalField fieldUS = WeekFields.of(Locale.US).dayOfWeek();
-        LocalDate start = daysOff.getStartDate(), end = daysOff.getEndDate();
-        String message = "Day off";
+        LocalDate start = daysOff.getStart(), end = daysOff.getEnd();
 
         Calendar todayCal = Calendar.getInstance(Locale.US), startCal = Calendar.getInstance(Locale.US),
                 endCal = Calendar.getInstance(Locale.US);

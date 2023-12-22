@@ -7,16 +7,18 @@ import { useParams } from "react-router-dom";
 export default function PrivateRoute({ child, role, hideNav }) {
     const [currUser, setCurrUser] = useState("");
     const navigate = useNavigate();
-    let { groupName } = useParams(); 
+    let { groupName } = useParams();
 
     useEffect(() => {
         const token = localStorage.getItem("jwt");
         UserService.getCurrUser(token)
             .then(response => {
-                console.log(response);
+                console.log("This is current user: " + response);
                 console.log("This is group: " + groupName)
-                if (response.data == '')
+                if (response.data == '') {
+                    localStorage.removeItem("jwt");
                     navigate('/login');
+                }
                 setCurrUser(response.data);
             })
             .catch(error => {
@@ -38,7 +40,7 @@ export default function PrivateRoute({ child, role, hideNav }) {
                 <Navbar role={currUser.role} /> :
                 <div></div>
             }
-            {React.cloneElement(child, { user: currUser,  group: groupName})}
+            {React.cloneElement(child, { user: currUser, group: groupName })}
         </div>
 
     );

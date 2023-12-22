@@ -1,47 +1,52 @@
-package com.example.build.dto.GroupDtos;
+package com.example.build.model.Requests;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import com.example.build.dto.ScheduleDtos.CreateScheduleDto;
 
-public class addScheduleDto {
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
-    @NotNull(message = "Email is required")
-    @Size(min = 1, message = "Email is required")
+@Entity
+public class SchedRequest extends Request {
+
+    @Column(nullable = false)
     private String email;
 
-    @NotNull(message = "Time is required")
-    @Size(min = 1, message = "Time is required")
+    @Column(nullable = false)
+    private String fullName;
+
+    @Column(nullable = false)
+    private String groupName;
+
+    @Column(nullable = false)
     private String Sunday;
 
-    @NotNull(message = "Time is required")
-    @Size(min = 1, message = "Time is required")
+    @Column(nullable = false)
     private String Monday;
 
-    @NotNull(message = "Time is required")
-    @Size(min = 1, message = "Time is required")
+    @Column(nullable = false)
     private String Tuesday;
 
-    @NotNull(message = "Time is required")
-    @Size(min = 1, message = "Time is required")
+    @Column(nullable = false)
     private String Wednesday;
 
-    @NotNull(message = "Time is required")
-    @Size(min = 1, message = "Time is required")
+    @Column(nullable = false)
     private String Thursday;
 
-    @NotNull(message = "Time is required")
-    @Size(min = 1, message = "Time is required")
+    @Column(nullable = false)
     private String Friday;
 
-    @NotNull(message = "Time is required")
-    @Size(min = 1, message = "Time is required")
+    @Column(nullable = false)
     private String Saturday;
 
-    public addScheduleDto(){
+    public SchedRequest() {
+
     }
 
-    public addScheduleDto(String email, String sunday, String monday, String tuesday, String wednesday, String thursday,
-            String friday, String saturday) {
+    public SchedRequest(String email, String sunday, String monday, String tuesday, String wednesday, String thursday,
+            String friday,
+            String saturday) {
         this.email = email;
         Sunday = sunday;
         Monday = monday;
@@ -50,6 +55,17 @@ public class addScheduleDto {
         Thursday = thursday;
         Friday = friday;
         Saturday = saturday;
+    }
+
+    public SchedRequest(CreateScheduleDto dto) {
+        this.email = dto.getEmail();
+        Sunday = dto.getSun();
+        Monday = dto.getMon();
+        Tuesday = dto.getTue();
+        Wednesday = dto.getWed();
+        Thursday = dto.getThur();
+        Friday = dto.getFri();
+        Saturday = dto.getSat();
     }
 
     public String getEmail() {
@@ -116,6 +132,20 @@ public class addScheduleDto {
         Saturday = saturday;
     }
 
-    
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
 }

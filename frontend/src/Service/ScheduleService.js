@@ -17,6 +17,18 @@ class ScheduleService extends React.Component {
         )
     }
 
+    getSchedule(dto) {
+        return axios.post(BASE_URL + 'getSchedule', dto,
+            {
+                withCredentials: 'include', //Enables sending cookies from api to browser
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: "application/json"
+                }
+            }
+        )
+    }
+
     createDayOff(dto) {
         return axios.post(BASE_URL + 'createDaysOff', dto,
             {

@@ -1,4 +1,4 @@
-package com.example.registration;
+package com.example.registration.UnitIntegrationTests;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;

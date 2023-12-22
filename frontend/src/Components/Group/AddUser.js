@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import GroupService from '../../Service/GroupService';
+import Modal from 'react-bootstrap/Modal';
 
-export const AddUser = ({ user, group }) => {
+const AddUser = ({ user, group, show, onClose }) => {
 
     const [submission, setSubmission] = useState({
-        name: group,
+        groupName: group,
         managerEmail: user.email,
         employeeEmail: ''
     });
@@ -26,7 +27,7 @@ export const AddUser = ({ user, group }) => {
         GroupService.addUser(submission)
             .then((response) => {
                 alert(submission.employeeEmail + " has been successfully added to " + group);
-                navigate(-1)
+                window.location.reload(false);
             })
             .catch((error) => {
                 if (error.response.data.fieldErrors) {
@@ -70,26 +71,33 @@ export const AddUser = ({ user, group }) => {
 
 
     return (
-        <div className="container margin-bottom">
-            <div class="text-center">
-
-                <div>{errorList}</div>
-
+        <div>
+            <Modal show={show} onHide={onClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add User to {submission.groupName}</Modal.Title>
+                </Modal.Header>
                 <form onSubmit={handleSubmit}>
-                    <div class="form-group row margin-bottom">
-                        <label class="col-sm-3 col-form-label"> Employee Email:</label>
-                        <div class="col-sm-7">
-                            <input type="name" class="form-control" name="employeeEmail" id="employeeEmail" placeholder="Enter Employee Email" value={submission.employeeEmail} onChange={handleChange} />
+                    <Modal.Body>
+                        {errorList}
+                        <div class="form-group row margin-bottom">
+                            <label class="col-sm-3 col-form-label"> Employee Email:</label>
+                            <div class="col-sm-7">
+                                <input type="name" class="form-control" name="employeeEmail" id="employeeEmail" placeholder="Enter Employee Email" value={submission.employeeEmail} onChange={handleChange} />
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-success">Add User</button><br></br>
-                    </div>
-
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button type="button" class="btn btn-secondary" onClick={onClose}>
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-primary" onClick={handleSubmit}>
+                            Add
+                        </button>
+                    </Modal.Footer>
                 </form>
-            </div>
-            <div>{group}</div>
+            </Modal>
         </div>
     );
-}
+};
+
+export default AddUser;

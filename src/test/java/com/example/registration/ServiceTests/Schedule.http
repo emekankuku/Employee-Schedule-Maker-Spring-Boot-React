@@ -1,0 +1,70 @@
+POST http://localhost:8080/schedule/createSchedule
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+{
+    "email": "ravymiyazaki@gmail.com",
+    "group": "groupa",
+    "sunday": "-",
+    "monday": "",
+    "tuesday": "02:00-22:00",
+    "wednesday": "02:00-22:00",
+    "thursday": "02:00-22:00",
+    "friday": "02:00-22:00",
+    "saturday": "02:00-22:00"
+}
+
+###
+
+POST http://localhost:8080/schedule/getSchedule
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+
+{
+     "group": "groupa",
+     "email": "ravymiyazaki@gmail.com"
+ }
+
+### 
+
+POST http://localhost:8080/grouping/getSchedules
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+
+{
+    "name": "groupa"
+}
+
+###
+
+POST http://localhost:8080/schedule/createDaysOff
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+{
+    "email": "ravymiyazaki@gmail.com",
+    "group": "groupa",
+    "start": "10/22/2023",
+    "end": "10/23/2023",
+    "note": "note"
+}
+
+###
+
+POST http://localhost:8080/grouping/getDaysOff
+Content-Type: application/json
+Accept: application/json
+Access-Control-Allow-Credentials: true
+
+
+{
+    "name": "groupa"
+}
+
+###

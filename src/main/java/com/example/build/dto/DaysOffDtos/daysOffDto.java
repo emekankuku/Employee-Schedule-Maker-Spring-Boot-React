@@ -15,11 +15,11 @@ public class daysOffDto {
 
     @NotNull(message = "Start date is required")
     @Size(min = 1, message = "Start date is required")
-    private String startDate;
+    private String start;
 
     @NotNull(message = "End date is required")
     @Size(min = 1, message = "End date is required")
-    private String endDate;
+    private String end;
 
     @NotNull(message = "Note is required")
     @Size(min = 1, message = "Note is required")
@@ -28,16 +28,16 @@ public class daysOffDto {
     public daysOffDto() {
     }
 
-    public daysOffDto(String startDate, String endDate, String note) {
-        this.startDate = startDate;
-        this.endDate = endDate;
+    public daysOffDto(String start, String end, String note) {
+        this.start = start;
+        this.end = end;
         this.note = note;
     }
     
 
     public daysOffDto(DaysOff daysOff){
-        this.startDate = daysOff.getStartDate().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-        this.endDate = daysOff.getEndDate().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+        this.start = daysOff.getStart().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+        this.end = daysOff.getEnd().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
         this.note = daysOff.getNote();
     }
 
@@ -50,20 +50,20 @@ public class daysOffDto {
     }
 
 
-    public String getStartDate() {
-        return startDate;
+    public String getStart() {
+        return start;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
+    public void setStart(String start) {
+        this.start = start;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public String getEnd() {
+        return end;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setEnd(String end) {
+        this.end = end;
     }
 
     public String getNote() {

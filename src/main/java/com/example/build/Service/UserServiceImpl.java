@@ -22,12 +22,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository<User> userRepository;
 
-    // @Autowired
-    // private UserRepository<Manager> managerRepository;
-
-    // @Autowired
-    // private UserRepository<Employee> employeeRepository;
-
     @Autowired
     private GroupRepository groupRepository;
 
@@ -37,7 +31,9 @@ public class UserServiceImpl implements UserService {
     // Saves SignupDto to the database
     @Override
     public User saveUser(SignupDto dto) {
-        return userRepository.save(new User(dto.getFirstName(), dto.getLastName(), dto.getEmail(),
+        String firstName = Character.toUpperCase(dto.getFirstName().charAt(0)) + dto.getFirstName().substring(1);
+        String lastName = Character.toUpperCase(dto.getLastName().charAt(0)) + dto.getLastName().substring(1);
+        return userRepository.save(new User(firstName, lastName, dto.getEmail(),
                 passwordEncoder.encode(dto.getPassword()), dto.getRole()));
     }
 
@@ -60,6 +56,7 @@ public class UserServiceImpl implements UserService {
             list.add(new UserDto(user));
         return list;
     }
+    
 
     // Returns an existing user from database
     @Override
@@ -68,5 +65,10 @@ public class UserServiceImpl implements UserService {
         if (user == null)
             throw new UsernameNotFoundException("Invalid username or password.");
         return UserDetailsImpl.build(user);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }

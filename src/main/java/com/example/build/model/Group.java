@@ -26,6 +26,9 @@ public class Group {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
+    private String leader;
+
     //This maps a group entity's users to still exist after the former is deleted
     @ManyToMany
     @JoinTable(name = "group_to_user", joinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
@@ -36,6 +39,9 @@ public class Group {
 
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "group")
     private Set<DaysOff> daysOff = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "group")
+    private Set<CheckIn> checkIns = new HashSet<>();
 
     public Group() {
     }
@@ -95,6 +101,15 @@ public class Group {
     public void setDaysOff(Set<DaysOff> daysOff) {
         this.daysOff = daysOff;
     }
+
+    public String getLeader() {
+        return leader;
+    }
+
+    public void setLeader(String leader) {
+        this.leader = leader;
+    }
+    
     
 
 

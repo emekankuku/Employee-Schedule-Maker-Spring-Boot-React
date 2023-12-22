@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ScheduleService from '../../Service/ScheduleService';
+import Modal from 'react-bootstrap/Modal';
 
-export const AddSchedule = ({ user, group }) => {
+const AddSchedule = ({ user, group, show, onClose }) => {
+
+    const retrievalSubmission = { group: group, email: user.email };
 
     const [submission, setSubmission] = useState({
         email: user.email,
@@ -17,38 +20,50 @@ export const AddSchedule = ({ user, group }) => {
         saturday: ''
 
     });
-    const [schedule, setSchedule] = useState({
+    const temp = {
         sunday: {
-            start: '00:00',
-            end: '00:00'
+            start: '',
+            end: ''
         },
         monday: {
-            start: '00:00',
-            end: '00:00'
+            start: '',
+            end: ''
         },
         tuesday: {
-            start: '00:00',
-            end: '00:00'
+            start: '',
+            end: ''
         },
         wednesday: {
-            start: '00:00',
-            end: '00:00'
+            start: '',
+            end: ''
         },
         thursday: {
-            start: '00:00',
-            end: '00:00'
+            start: '',
+            end: ''
         },
         friday: {
-            start: '00:00',
-            end: '00:00'
+            start: '',
+            end: ''
         },
         saturday: {
-            start: '00:00',
-            end: '00:00'
+            start: '',
+            end: ''
         }
-    })
+    };
+    const [schedule, setSchedule] = useState(
+        {
+            sunday:  temp["sunday"],
+            monday: temp["monday"],
+            tuesday: temp["tuesday"],
+            wednesday: temp["wednesday"],
+            thursday: temp["thursday"],
+            friday: temp["friday"],
+            saturday: temp["saturday"]
+        }
+    )
     const [errors, setErrors] = useState({})
     const [loading, setLoading] = useState(false);
+    const [timeRangeWarning, setTimeRangeWarning] = useState(false);
 
     const navigate = useNavigate();
 
@@ -59,25 +74,56 @@ export const AddSchedule = ({ user, group }) => {
         if ({ user })
             setLoading(false);
         setSubmission({ ...submission, email: user.email });
+        ScheduleService.getSchedule(retrievalSubmission)
+            .then((response) => {
+                var arr = response.data;
+                Object.keys(arr || {}).map(
+                    day => {
+                        var range = temp[day];
+                        if (arr[day] == "") {
+                            range.start = "";
+                            range.end = "";
+                            // setTemp({
+                            //     ...temp,
+                            //     [day]: range
+                            // });
+                            temp[day] = range;
+                        } else {
+                            var splitted = arr[day].split('-');
+                            range.start = splitted[0];
+                            range.end = splitted[1];
+                            // setTemp({
+                            //     ...temp,
+                            //     [day]: range
+                            // });
+                            temp[day] = range;
+                        }
+                    }
+                )
+                console.log(temp);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }, [user, group]);
 
     const handleSubmit = e => {
         e.preventDefault();
-        var submissionInput = submission;
+        if (timeRangeWarning)
+            return;
         Object.keys(schedule || {}).map(
             day => {
-                var timeRange = schedule[day].start + "-" + schedule[day].end;
+                var timeRange = "";
+                if (schedule[day].start != "" && schedule[day].end != "")
+                    timeRange = schedule[day].start + "-" + schedule[day].end;
                 submission[day] = timeRange;
             }
         )
 
-        setSubmission(submissionInput)
-        // setSubmission({ ...submission, schedule: submissionSchedule });
-
         ScheduleService.createSchedule(submission)
             .then((response) => {
                 alert(submission.email + " has been successfully created its schedule");
-                navigate("/groups/" + group)
+                window.location.reload(false);
             })
             .catch((error) => {
                 if (error.response.data.fieldErrors) {
@@ -92,10 +138,14 @@ export const AddSchedule = ({ user, group }) => {
     }
 
     const startTimeChange = e => {
+        setTimeRangeWarning(false);
         const value = e.target.value;
         const name = e.target.name;
         const day = schedule[name];
         day.start = value;
+        console.log(temp);
+        if (day.start > day.end)
+            setTimeRangeWarning(true);
         setSchedule({
             ...schedule,
             [name]: day
@@ -103,10 +153,14 @@ export const AddSchedule = ({ user, group }) => {
     }
 
     const endTimeChange = e => {
+        setTimeRangeWarning(false);
         const value = e.target.value;
         const name = e.target.name;
         const day = schedule[name];
         day.end = value;
+        console.log(temp);
+        if (day.start > day.end)
+            setTimeRangeWarning(true);
         setSchedule({
             ...schedule,
             [name]: day
@@ -127,14 +181,35 @@ export const AddSchedule = ({ user, group }) => {
         )
     })
 
+    const rangeWarning = (
+        <div class="alert alert-danger" role="alert">
+            Incorrect Time Range
+        </div>
+    )
+
+    function resetSchedule() {
+        console.log(temp);
+        setSchedule( {
+            sunday:  temp["sunday"],
+            monday: temp["monday"],
+            tuesday: temp["tuesday"],
+            wednesday: temp["wednesday"],
+            thursday: temp["thursday"],
+            friday: temp["friday"],
+            saturday: temp["saturday"]
+        });
+    }
+
     return (
-        <div className="container margin-bottom">
-            <div class="text-center">
-
-                <div>{errorList}</div>
-
+        <div>
+            <Modal show={show} onHide={onClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Submit Schedule</Modal.Title>
+                </Modal.Header>
                 <form onSubmit={handleSubmit}>
-                    <div class="form-group row margin-bottom">
+                    <Modal.Body>
+                        {timeRangeWarning ? rangeWarning : <div></div>}
+                        {errorList}
                         {Object.keys(schedule || {}).map(
                             day =>
                                 <div class="form-group row margin-bottom">
@@ -148,15 +223,22 @@ export const AddSchedule = ({ user, group }) => {
                                     </div>
                                 </div>
                         )}
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-success">Add Schedule</button><br></br>
-                    </div>
-
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button type="button" class="btn btn-secondary" onClick={resetSchedule}>
+                            Reset Schedule
+                        </button>
+                        <button type="button" class="btn btn-secondary" onClick={onClose}>
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-primary" onClick={handleSubmit}>
+                            Submit
+                        </button>
+                    </Modal.Footer>
                 </form>
-            </div>
-            <div>
-            </div>
+            </Modal>
         </div>
     );
-}
+};
+
+export default AddSchedule;
